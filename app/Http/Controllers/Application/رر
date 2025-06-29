@@ -1,0 +1,14 @@
+   // if (Session::get('locale') == null)
+    // {
+    //     Session::put('locale', 'en');
+    // }
+    // if ($lang != '')
+    // {
+    //     if ($lang=="1") {
+    //         session::put('locale', 'en');
+    //     }
+    //     else if($lang=="2")
+    //     {
+    //         session::put('locale', 'ar');
+    //     }
+    // }

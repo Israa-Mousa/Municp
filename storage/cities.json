@@ -1,0 +1,37 @@
+{
+    "Cities":[
+        {  "id":"1",
+            "name": "Ramallah"
+        },
+        {
+            "id":"2",
+            "name": "Gaza"
+        },
+        {
+            "id":"3",
+            "name": "Jennin"
+        },
+        {
+            "id":"4",
+            "name": "Toolkarem"
+        },
+        {
+            "id":"5",
+            "name": "Salfit"
+        },
+        {
+            "id":"6",
+            "name": "Qalqliya"
+        },
+        {
+            "id":"7",
+            "name": "Hebron"
+        },
+        {
+            "id":"8",
+            "name": "BietLahm"
+        }
+
+    ]
+
+    }

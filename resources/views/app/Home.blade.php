@@ -4,7 +4,7 @@
         {{-- <div class="  " id="home-banner" style="" > --}}
 
     <div class="">
-        <div class="ps-services owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="7000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
+        <div class="ps-services owl-slider" data-owl-auto="true" data-owl-loop="true"  style="width:100%;max-width:100%" data-owl-speed="7000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
             {{-- @if($projects)
             @foreach ($projects as $project)
 
@@ -306,7 +306,7 @@
     <div class="ps-section ps-home-blog pt-80 pb-80">
         <div class="ps-container">
             <div class="ps-section__header mb-50">
-                <h2 class="ps-section__title" data-mask="News">- {{ __('app.our projects') }}</h2>
+                <h2 class="ps-section__title" data-mask="Projects">- {{ __('app.our projects') }}</h2>
                 <div class="ps-section__action"><a class="ps-morelink text-uppercase" href="#">{{ trans('app.View all projects') }}<i class="fa fa-long-arrow-right"></i></a></div>
             </div>
             <div class="ps-section__content">
@@ -323,7 +323,7 @@
                                 @endif
 
                             </a>
-                                <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html"></a></span> -<span class="ml-5">{{ $project->created_at }}</span></p>
+                                {{-- <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html"></a></span> -<span class="ml-5">{{ $project->created_at }}</span></p> --}}
                                 <p>
                                     @if(Session::get('locale')=='ar')
                                 {{$project->introduction_ar  }}

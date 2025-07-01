@@ -30,7 +30,7 @@ return [
     "ٌread more" => "افرأ اكثر",
     "View all projects" => "عرض جميع المشاريع",
     "READ MORE" => "افرا",
-    "contacts with Muncipilaty" => "تواصل مع البلدية",
+    "contacts with Municipality" => "تواصل مع البلدية",
     "contact us" => "تواصل معنا",
     "subject" => "الموضوع",
     "message" => "الرسالة",

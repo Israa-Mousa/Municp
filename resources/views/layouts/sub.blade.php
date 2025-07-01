@@ -14,7 +14,7 @@
                     {{-- {{csrf_field()}} --}}
                     <input class="form-control" type="text" id="name"name="name" placeholder=""
                     value="">
-                    <button>{{ __('app.contacts with Muncipilaty') }}</button>
+                    <button>{{ __('app.contacts with Municipality') }}</button>
                 </form>
             </div>
 

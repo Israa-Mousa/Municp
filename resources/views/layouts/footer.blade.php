@@ -101,11 +101,13 @@
             </div>
         </div>
     </div>
-    <div class="ps-footer__copyright">
+    <div class="ps-footer__copyright" @if(app()->getLocale() == 'ar') dir="rtl" @endif>
         <div class="ps-container">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                    <p>&copy; <a href="#">{{ __('Ramallah Municipality app') }}</a>  {{ __('All rights reserved') }} {{ __('Design by') }} <a href="#"> {{ __('designer name') }}</a></p>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 " style="text-align: left">
+                    {{-- <p>&copy; <a href="#">{{ __('Ramallah Municipality app') }}</a>  {{ __('All rights reserved') }} {{ __('Design by') }} <a href="#"> {{ __('designer name') }}</a></p> --}}
+                  <p>{{ __('All rights reserved') }}.{{ __('Ramallah Municipality app') }} &copy; {{ date('Y') }} – {{ __('Design by') }}:
+                                   <a href="#"> {{ __('designer name') }}</a></p>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                     <ul class="ps-social">

@@ -35,5 +35,8 @@ return [
     "tenders"=>"Tenders",
     "institutions"=>"institutions",
     "Go to home"=>"Go to home",
-  "designer name"=>"Israa Mousa"
+  "designer name"=>"Israa Mousa",
+  "TOURISM AND ANTIQUITIES"=>"TOURISM AND ANTIQUITIES",
+      "contacts with Municipality" => "contacts with Municipality",
+
 ];

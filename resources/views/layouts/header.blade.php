@@ -1,7 +1,9 @@
 
 <header class="header" style="" >
     <div class="header__top">
-            <div class="container-fluid">
+            {{-- <div class="container-fluid"> --}}
+                <div class="container-fluid {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+
                 <div class="row">
                     <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12 ">
                         <p>{{ __('app.location') }}</p>
@@ -15,13 +17,17 @@
                                 @csrf
                             </form>
                             @else
-                            <a href="{{ route('login') }}">{{ __('app.Login & Regiser') }}</a>
+                            <a href="{{ route('login') }}">{{ __('Login & Register') }}</a>
+
                             @endauth
 
                             <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ __('language') }}<i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="/1">{{ __('english') }}</a></li>
-                                    <li><a href="/2">{{ __('arabic') }}</a></li>
+                                    {{-- <li><a href="/1">{{ __('english') }}</a></li>
+                                    <li><a href="/2">{{ __('arabic') }}</a></li> --}}
+                                    <li><a href="{{ url('/en') }}">{{ __('english') }}</a></li>
+<li><a href="{{ url('/ar') }}">{{ __('arabic') }}</a></li>
+
                                 </ul>
                             </div>
                         </div>
@@ -31,11 +37,11 @@
         </div>
         <nav class="navigation">
             <div class="container-fluid">
-                <div class="navigation__column left">
+                <div class="navigation__column  {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }} left">
                     <div class="header__logo"><a class="ps-logo" style="padding-top:8px!important" href="index.html"><img src="{{asset('image/header2.jpg')}}" alt=""></a></div>
                 </div>
-                <div class="navigation__column center">
-                    <ul class="main-menu menu">
+                <div class="navigation__column  {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }} center">
+                    <ul class="main-menu menu {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
                         <li class="menu-item menu-item-has-children dropdown"><a href="/">{{ trans('app.Home') }}</a>
 
                         </li>
@@ -108,7 +114,7 @@
 
                     </ul>
                 </div>
-                <div class="navigation__column right">
+                <div class="navigation__column  {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }} right">
                     <form class="ps-search--header" action="do_action" method="post">
                         <input class="form-control" type="text" placeholder="{{ __('search') }}">
                         <button><i class="ps-icon-search"></i></button>

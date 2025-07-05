@@ -39,6 +39,8 @@ return [
     "tenders"=>"عطاءات",
     "institutions"=>"مؤسسات",
     "Go to home"=>"العودة للصفحة الرئيسية",
+     "our institutions"=>"مؤسساتنا",
+               "our projects"=>"مشاريعنا",
 
 
 ];

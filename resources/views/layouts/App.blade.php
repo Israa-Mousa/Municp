@@ -51,7 +51,8 @@
 </script> --}}
 
 
-<body class="ps-loading">
+{{-- <body class="ps-loading"> --}}
+<body class="ps-loading {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
     <div class="header--sidebar"></div>
 

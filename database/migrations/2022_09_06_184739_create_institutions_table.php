@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('fax')->nullable();
             $table->string('url')->nullable();
             $table->string('email')->nullable();
+                        $table->string('image')->nullable();
+
             $table->timestamps();
 
         });

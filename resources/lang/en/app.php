@@ -38,5 +38,8 @@ return [
   "designer name"=>"Israa Mousa",
   "TOURISM AND ANTIQUITIES"=>"TOURISM AND ANTIQUITIES",
       "contacts with Municipality" => "contacts with Municipality",
+          "our institutions"=>"Our Institutions ",
+          "our projects"=>"Our Projects",
+
 
 ];

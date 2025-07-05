@@ -12,39 +12,65 @@ use App\Models\Projects;
 use App\Models\contacts;
 use App\Models\Services;
 use App\Models\Tourisms;
+use App\Models\Institutions;
+
 use Mail;
 
 class AppController extends Controller
 {
     //
 
-    public function index($lang = null)
-    {
-        // var_dump($lang);
-        // var_dump(session::get('locale'));
-        if (Session::get('locale') == null) {
-            // dd('sad');
-            Session::put('locale', 'en');
-        }
-        if ($lang != '') {
-            if ($lang == "1") {
-                session::put('locale', 'en');
-            } else if ($lang == "2") {
-                session::put('locale', 'ar');
-            }
-        }
-        $blogs = Blog::all();
-        $lang = Session::get('locale');
-        $services = Services::mainServices();
-        $tourisms = Tourisms::all();
-        $projects = Projects::all();
-        return view('App.Home', [
-            'services' => $services,
-            'projects' => $projects,
-            'tourisms' => $tourisms,
+    // public function index($lang = null)
+    // {
+    //     // var_dump($lang);
+    //     // var_dump(session::get('locale'));
+    //     if (Session::get('locale') == null) {
+    //         // dd('sad');
+    //         Session::put('locale', 'en');
+    //     }
+    //     if ($lang != '') {
+    //         if ($lang == "1") {
+    //             session::put('locale', 'en');
+    //         } else if ($lang == "2") {
+    //             session::put('locale', 'ar');
+    //         }
+    //     }
+    //     $blogs = Blog::all();
+    //     $lang = Session::get('locale');
+    //     $services = Services::mainServices();
+    //     $tourisms = Tourisms::all();
+    //     $projects = Projects::all();
+    //     $institutions=institutions::all();
+    //     return view('App.Home', [
+    //         'services' => $services,
+    //         'projects' => $projects,
+    //         'tourisms' => $tourisms,
+    //         'institutions'=>$institutions
 
-        ]);
+    //     ]);
+    // }
+
+    public function index($lang = null)
+{
+    if ($lang) {
+        Session::put('locale', $lang);
+        app()->setLocale($lang); // مهم لتفعيل اللغة في نفس الطلب
     }
+
+    $blogs = Blog::all();
+    $lang = Session::get('locale');
+    $services = Services::mainServices();
+    $tourisms = Tourisms::all();
+    $projects = Projects::all();
+    $institutions = Institutions::all();
+
+    return view('App.Home', [
+        'services' => $services,
+        'projects' => $projects,
+        'tourisms' => $tourisms,
+        'institutions' => $institutions
+    ]);
+}
 
     public function blogs($id)
     {

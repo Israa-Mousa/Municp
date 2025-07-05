@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الصفحة الرئيسية | بلدية رام الله</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      direction: rtl;
+      color: #333;
+    }
+
+    header {
+      background: #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #0073aa;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #005f87;
+    }
+
+    .top-banner {
+      background: #f4f4f4;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .slider-container {
+      width: 100%;
+      height: 380px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .slider-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 30px;
+      margin: 40px 0 15px;
+      font-weight: 700;
+      color: #0073aa;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: #0073aa;
+      margin: 10px auto 0;
+      border-radius: 4px;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      padding: 0 20px 60px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      width: 100%;
+      max-width: 360px;
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+
+    .card .content {
+      padding: 18px;
+    }
+
+    .card .content h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #222;
+    }
+
+    .card .content p {
+      color: #555;
+      margin: 10px 0 0;
+      font-size: 15px;
+    }
+
+    .card .content a {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #0073aa;
+      text-decoration: none;
+    }
+
+    .footer {
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 14px;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- شريط علوي -->
+  <div class="top-banner">
+    بلدية رام الله تطلق مشروع المدينة الذكية – نحو خدمات بلدية رقمية أفضل
+  </div>
+
+  <!-- رأس الصفحة -->
+  <header>
+    <img src="{{ asset('assets/logo.png') }}" alt="شعار البلدية" height="50">
+    <nav>
+      <ul>
+        <li><a href="#">الصفحة الرئيسية</a></li>
+        <li><a href="#">البلدية</a></li>
+        <li><a href="#">الخريطة</a></li>
+        <li><a href="#">الأخبار</a></li>
+        <li><a href="#">اتصل بنا</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- سلايدر -->
+  <div class="slider-container">
+    <img src="{{ asset('assets/App/images/access/rashid.jpg') }}" alt="صورة 1">
+  </div>
+
+  <!-- السياحة -->
+  <h2 class="section-title">السياحة في رام الله</h2>
+  <div class="card-container">
+    @foreach ($tourisms as $tourism)
+      <div class="card">
+        <img src="{{ asset('/storage/' . ($tourism->GetImageLibrary($tourism->id)[0]->file_name ?? 'assets/App/images/access/5.jpg')) }}" alt="صورة سياحية">
+        <div class="content">
+          <h3>{{ Session::get('locale') == 'ar' ? $tourism->name_ar : $tourism->name }}</h3>
+          <p>{{ Session::get('locale') == 'ar' ? $tourism->location_ar : $tourism->location }}</p>
+          <a href="#">{{ __('app.Go for details') }} &raquo;</a>
+        </div>
+      </div>
+    @endforeach
+  </div>
+
+  <!-- خدمات -->
+  <h2 class="section-title">{{ trans('app.our services') }}</h2>
+  <div class="card-container">
+    @foreach ($services as $service)
+      <div class="card">
+        <img src="{{ asset('storage/' . $service->icon) }}" alt="أيقونة الخدمة">
+        <div class="content">
+          <h3>{{ Session::get('locale') == 'ar' ? $service->name_ar : $service->name }}</h3>
+          <p>{{ Session::get('locale') == 'ar' ? $service->description_ar : $service->description }}</p>
+        </div>
+      </div>
+    @endforeach
+  </div>
+
+  <!-- المشاريع -->
+  <h2 class="section-title">{{ __('app.our projects') }}</h2>
+  <div class="card-container">
+    @foreach($projects as $project)
+      <div class="card">
+        <img src="{{ asset('storage/' . ($project->image ?? 'assets/App/images/access/5.jpg')) }}" alt="صورة المشروع">
+        <div class="content">
+          <h3>{{ Session::get('locale') == 'ar' ? $project->name_ar : $project->name }}</h3>
+          <p>{{ Session::get('locale') == 'ar' ? $project->introduction_ar : $project->introduction }}</p>
+          <a href="#">{{ trans('app.MORE') }} &raquo;</a>
+        </div>
+      </div>
+    @endforeach
+  </div>
+
+  <!-- الفوتر -->
+  <div class="footer">
+    جميع الحقوق محفوظة، بلدية رام الله &copy; 2025 - تصميم: إسراء موسى
+  </div>
+
+</body>
+</html>

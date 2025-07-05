@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang={{ app()->getLocale() }} dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="utf-8">
@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ asset('assets/App/plugins/ps-icon/style.css') }}">
     <!-- CSS Library-->
     <link rel="stylesheet" href="{{ asset('assets/App/plugins/bootstrap/dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/App/plugins/owl-carousel/assets/owl.carousel.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/App/plugins/owl-carousel/assets/owl.carousel.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('assets/App/plugins/jquery-bar-rating/dist/themes/fontawesome-stars.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/App/plugins/slick/slick/slick.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/App/plugins/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
@@ -29,7 +29,27 @@
     <link rel="stylesheet" href="{{ asset('assets/App/plugins/revolution/css/layers.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/App/plugins/revolution/css/navigation.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/App/css/style.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
 </head>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+{{-- <script>
+  const swiperBlogs = new Swiper(".mySwiperBlogs", {
+    loop: true,
+    autoplay: {
+      delay: 7000,
+      disableOnInteraction: false,
+    },
+    slidesPerView: 1,
+    navigation: {
+      nextEl: ".swiper-button-next-blogs",
+      prevEl: ".swiper-button-prev-blogs",
+    },
+  });
+</script> --}}
+
 
 <body class="ps-loading">
 

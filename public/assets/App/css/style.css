@@ -53,6 +53,150 @@
            5.2 margin
            5.3 padding
 */
+.header-news-ticker {
+  overflow: hidden;
+  background: #f1f1f1;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  direction: rtl;
+  padding: 8px 0;
+}
+
+.news-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.news-track {
+  display: inline-flex;
+  animation: tickerMove 40s linear infinite;
+  white-space: nowrap;
+}
+
+.news-item {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+  margin-inline-start: 60px;
+}
+
+.news-item img.myimage {
+  width: 20px;
+  height: 20px;
+  margin-inline-end: 8px;
+  vertical-align: middle;
+  object-fit: contain;
+}
+
+@keyframes tickerMove {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.swiper-button-next, .swiper-button-prev {
+  color: #fff;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #eef3f8 !important; /* لون رمادي متوسط */
+  /* أو تستخدم رمادي أفتح أو أغمق حسب ذوقك */
+  /* مثلاً: #888888 أو #999999 */
+}
+
+/* لو حابب تضيف تأثير عند التمرير أو التحويم */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #495057; /* رمادي غامق أكثر عند التمرير */
+}
+
+  .section-title {
+      text-align: center;
+      font-size: 30px;
+      margin: 40px 0 15px;
+      font-weight: 700;
+      /* color: #0073aa; */
+      position: relative;
+    }
+
+  .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      padding: 0 20px 60px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      width: 100%;
+      max-width: 360px;
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+
+    .card .content {
+      padding: 18px;
+    }
+
+    .card .content h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #222;
+    }
+
+    .card .content p {
+      color: #555;
+      margin: 10px 0 0;
+      font-size: 15px;
+    }
+
+    .card .content a {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #2AC37D;
+      text-decoration: none;
+    }
+
+
 .masonry-wrapper .grid-item .grid-item__inner, .setting .grid-item .grid-item__inner {
   position: relative; }
 

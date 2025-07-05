@@ -1,17 +1,49 @@
+<div class="header-news-ticker">
+  <div class="news-track" id="news-track">
+    @php
+        $minItems = 3;
+        $loopCount = 1;
+        $displayBlogs = $blogs->take($minItems);
+        if ($displayBlogs->count() < $minItems) {
+            for ($i = $displayBlogs->count(); $i < $minItems; $i++) {
+                $displayBlogs->push(null);
+            }
+        }
+    @endphp
 
-    <div class="header-services">
-        <div class="ps-services owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="7000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
-           @if(count($blogs) <3)
-            <p class="ps-service"><i><img src="{{ asset('image/logblog.png') }}" class="myimage"></i><strong>Need three Post</strong>: please weait till admin add post</p>
-            <p class="ps-service"><i><img src="{{ asset('image/logblog.png') }}" class="myimage"></i><strong>Need three Post</strong>: please weait till admin add post</p>
-            <p class="ps-service"><i><img src="{{ asset('image/logblog.png') }}" class="myimage"></i><strong>Need three Post</strong>: please weait till admin add post</p>
-           @else
-            @foreach ( $blogs  as $blog )
-           <p class="ps-service"><i><img src="{{ asset('image/logblog.png') }}" class="myimage"></i>
-            {{-- <a>@if(Session::get('locale')=="ar"){{ $blog->name_ar }}@else{{ $blog->name}}@endif</a> --}}
+    @foreach ($displayBlogs as $blog)
+      <span class="news-item">
+        <img src="{{ asset('image/logblog.png') }}" class="myimage" alt="icon" />
+        <strong>
+          @if ($blog)
+            {{ Session::get('locale') == "ar" ? $blog->name_ar : $blog->name }}
+          @else
+            {{ __('Need Post') }}
+          @endif
+        </strong>
+        @if ($blog)
+          {{ Session::get('locale') == "ar" ? $blog->introduction_ar : $blog->introduction }}
+        @else
+          {{ __('Please wait till admin adds post') }}
+        @endif
+      </span>
+    @endforeach
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const track = document.getElementById('news-track');
+    const clone = track.cloneNode(true);
+    clone.id = 'news-track-clone';
+    track.parentNode.appendChild(clone);
 
-            <strong>@if(Session::get('locale')=="ar"){{ $blog->name_ar }}@else{{ $blog->name}}@endif</strong>@if(Session::get('locale')=="ar"){{ $blog->introduction_ar }}@else{{ $blog->introduction}}@endif</p>
-           @endforeach
-           @endif
-        </div>
-    </div>
+    const fullWidth = track.scrollWidth;
+    const duration = fullWidth / 50; // كلما زاد الطول زادت المدة
+
+    track.style.animationDuration = duration + 's';
+    clone.style.animation = `tickerMove ${duration}s linear infinite`;
+    clone.style.position = 'absolute';
+    clone.style.left = fullWidth + 'px';
+    clone.style.top = '0';
+  });
+</script>

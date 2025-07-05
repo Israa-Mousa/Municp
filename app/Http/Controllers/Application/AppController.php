@@ -87,7 +87,7 @@ class AppController extends Controller
 
 
 
-    public function contact($name = null, Request $request)
+    public function contact( Request $request,$name = null)
     {
         // var_dump($name);
         // var_dump($request->name);

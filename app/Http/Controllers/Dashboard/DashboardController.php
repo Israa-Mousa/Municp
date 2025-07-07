@@ -3,10 +3,21 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Tenders;
 use Illuminate\support\Facades\Http;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
+use App\Models\Blog;
+//use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
+use App\Models\Projects;
+use App\Models\contacts;
+use App\Models\Services;
+use App\Models\Tourisms;
+use App\Models\Institutions;
+
 class DashboardController extends Controller
 {
     //
@@ -15,9 +26,28 @@ class DashboardController extends Controller
 
         // echo "<pre>";
         print_r(__($cities['Cities'][0]['name']));
-
+           $blogs = Blog::all();
+    $lang = Session::get('locale');
+    $services = Services::mainServices();
+    $tourisms = Tourisms::all();
+    $projects = Projects::all();
+    $institutions = Institutions::all();
+    $tendersCount=Tenders::all()->count();
+         // Count each
+    $blogCount = $blogs->count();
+    $serviceCount = $services->count();
+    $tourismCount = $tourisms->count();
+    $projectCount = $projects->count();
+    $institutionCount = $institutions->count();
         // dd();
-        return view('dashboard.index');
+        return view('dashboard.index',[     // Send counts
+        'blogCount' => $blogCount,
+        'serviceCount' => $serviceCount,
+        'tourismCount' => $tourismCount,
+        'projectCount' => $projectCount,
+        'institutionCount' => $institutionCount,
+        'tendersCount'=>$tendersCount
+    ]);
     }
 
     public function userpage(){

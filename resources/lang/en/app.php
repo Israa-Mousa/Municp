@@ -40,6 +40,7 @@ return [
       "contacts with Municipality" => "contacts with Municipality",
           "our institutions"=>"Our Institutions ",
           "our projects"=>"Our Projects",
+          "our projects22"=>"Our Projects",
 
 
 ];

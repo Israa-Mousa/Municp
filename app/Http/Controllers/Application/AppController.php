@@ -63,11 +63,15 @@ class AppController extends Controller
     $tourisms = Tourisms::all();
     $projects = Projects::all();
     $institutions = Institutions::all();
+        $blogs = Blog::all();
+    $blogCount = $blogs->count(); // حساب عدد المدونات
 
     return view('App.Home', [
         'services' => $services,
         'projects' => $projects,
         'tourisms' => $tourisms,
+        'blogCount' => $blogCount,
+
         'institutions' => $institutions
     ]);
 }

@@ -70,7 +70,7 @@
     </div>
 
     <!-- قسم المشاريع -->
-    <div class="ps-section ps-home-blog pt-80 pb-80">
+    {{-- <div class="ps-section ps-home-blog pt-80 pb-80">
         <div class="ps-container">
             <div class="ps-section__header mb-50 d-flex justify-content-between align-items-center flex-{{ app()->getLocale() == 'ar' ? 'row-reverse' : 'row' }}">
                 <h class="ps-section__title" data-mask="projects">- {{ trans('app.our projects') }}</h3>
@@ -97,7 +97,35 @@
                 @endforeach
             </div>
         </div>
+    </div> --}}
+    <div class="ps-section ps-home-blog pt-80 pb-80">
+    <div class="ps-container">
+        <div class="ps-section__header mb-50 d-flex justify-content-between align-items-center flex-{{ app()->getLocale() == 'ar' ? 'row-reverse' : 'row' }}">
+            <h3 class="ps-section__title" data-mask="projects">- {{ trans('app.our projects') }}</h3>
+            <div class="ps-section__action" style="float: {{ app()->getLocale() == 'ar' ? 'left' : 'right' }}">
+                <a class="ps-morelink text-uppercase btn-details" href="#">{{ trans('app.View all projects') }}
+                    <i class="fa fa-long-arrow-{{ app()->getLocale() == 'ar' ? 'left' : 'right' }}"></i>
+                </a>
+            </div>
+        </div>
+        <div class="card-container">
+            @foreach($projects as $project)
+                <div class="card">
+                    <img src="{{ $project->image && file_exists(public_path('storage/' . $project->image))
+                                ? asset('storage/' . $project->image)
+                                : asset('assets/App/images/access/side_view.jpg') }}"
+                         alt="{{ $project->name_ar ?? 'صورة مشروع' }}">
+                    <div class="content">
+                        <h3>{{ app()->getLocale() == 'ar' ? $project->name_ar : $project->name }}</h3>
+                        <p class="location-text">{{ app()->getLocale() == 'ar' ? $project->introduction_ar : $project->introduction }}</p>
+                        <a href="#" class="btn-details">{{ trans('app.MORE') }}</a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
+</div>
+
 
     <!-- قسم المؤسسات -->
     <div class="ps-section ps-section--partners pt-60 pb-60">

@@ -37,10 +37,10 @@ return [
     "Go to home"=>"Go to home",
   "designer name"=>"Israa Mousa",
   "TOURISM AND ANTIQUITIES"=>"TOURISM AND ANTIQUITIES",
-      "contacts with Municipality" => "contacts with Municipality",
-          "our institutions"=>"Our Institutions ",
-          "our projects"=>"Our Projects",
-          "our projects22"=>"Our Projects",
+  "contacts with Municipality" => "contacts with Municipality",
+        "our institutions"=>"Our Institutions ",
+        "our projects"=>"Our Projects",
+        "our projects22"=>"Our Projects",
 
 
 ];

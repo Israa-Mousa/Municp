@@ -4,9 +4,10 @@
 
         <div class="ps-container">
 
-            <div class="ps-section__header mb-50">
+            {{-- <div class="ps-section__header mb-50">
                 <h2 class="ps-section__title" data-mask="Ramallah Nuncipilty">- {{ __('app.careers') }}</h2>
-            </div>
+            </div> --}}
+
     <div class="container">
      <div class="row justify-center:center">
         <div class="col-md-6 content">

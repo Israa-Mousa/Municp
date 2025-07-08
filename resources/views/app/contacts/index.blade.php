@@ -1,84 +1,59 @@
-<x-app-layout title='contact'>
-
-    <div class="ps-section ps-section--hotdeal-3 pt-80 pb-40">
+<x-app-layout title='Contact Us'>
+    <div class="ps-section ps-section--contact pt-80 pb-40">
         <div class="ps-container">
-            <div class="ps-section__header mb-50">
-                <h3 class="ps-section__title" data-mask="Ramllah Muncipilty">Contact us</h3>
+            <div class="ps-section__header mb-50 text-left">
+                <h3 class="ps-section__title" data-mask="Ramallah Municipality">{{ __('Contact Us') }}</h3>
             </div>
+
             <div class="ps-section__content">
-                <div class="row"
-                    style="display: flex;
-                justify-content: center;
-                justify-items: center;">
-                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
-                        <form action="" method="post" action="{{ route('contact.save') }}">
+                <div class="row justify-content-start">
+                    <div class="col-lg-6 col-md-8 col-sm-12">
+                        <form action="{{ route('contact.save') }}" method="POST" class="contact-form">
                             @csrf
 
                             <div class="form-group">
-                                <label>{{ trans('name') }}</label>
+                                <label for="name">{{ __('Name') }}</label>
                                 <input type="text" class="form-control" name="name" id="name"
-                                    value="@if($name){{ $name ?: old('name')}}@else @auth{{ Auth::User()->name }}@endauth @endif">
-
-                                <!-- Show error -->
-                                @if ($errors->has('name'))
-                                    <div class="alert alert-danger">
-                                        {{ $errors->first('name') }}
-                                    </div>
-                                @endif
+                                    value="@if($name){{ $name ?: old('name') }}@else @auth{{ Auth::user()->name }}@endauth @endif">
+                                @error('name')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
-                                <label>{{ trans('app.email') }}</label>
+                                <label for="email">{{ __('Email') }}</label>
                                 <input type="email" class="form-control" name="email" id="email"
-                                    value="@auth
-{{ Auth::User()->email }} @endauth">
-
-                                <!-- Show error -->
-                                @if ($errors->has('email'))
-                                    <div class="alert alert-danger">
-                                        {{ $errors->first('email') }}
-                                    </div>
-                                @endif
+                                    value="@auth{{ Auth::user()->email }}@endauth">
+                                @error('email')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
-                                <label> {{ trans('app.phone') }}</label>
+                                <label for="phone">{{ __('Phone') }}</label>
                                 <input type="text" class="form-control" name="phone" id="phone">
-
-                                <!-- Show error -->
-                                @if ($errors->has('phone'))
-                                    <div class="alert alert-danger">
-                                        {{ $errors->first('phone') }}
-                                    </div>
-                                @endif
+                                @error('phone')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
-                                <label>{{ trans('app.subject') }}</label>
+                                <label for="subject">{{ __('Subject') }}</label>
                                 <input type="text" class="form-control" name="subject" id="subject">
-
-                                <!-- Show error -->
-                                @if ($errors->has('subject'))
-                                    <div class="alert alert-danger">
-                                        {{ $errors->first('subject') }}
-                                    </div>
-                                @endif
+                                @error('subject')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
-                                <label>{{ trans('app.message') }}</label>
+                                <label for="text">{{ __('Message') }}</label>
                                 <textarea class="form-control" name="text" id="text" rows="5"></textarea>
-
-                                <!-- Show error -->
-                                @if ($errors->has('text'))
-                                    <div class="alert alert-danger">
-                                        {{ $errors->first('text') }}
-                                    </div>
-                                @endif
+                                @error('text')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <input type="submit" name="send" value="{{ trans('app.send') }}"
-                                class="btn btn-dark btn-block">
+                            <button type="submit" class="btn btn-dark btn-block">{{ __('Send') }}</button>
                         </form>
                     </div>
                 </div>
@@ -86,3 +61,44 @@
         </div>
     </div>
 </x-app-layout>
+
+<style>
+    .contact-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        border-radius: 20px; /* حواف مستديرة */
+        padding: 12px 20px; /* رفع المسافة داخل الحقل */
+        border: 2px solid #ccc; /* حواف خفيفة */
+        transition: border-color 0.3s ease; /* تأثير الانتقال عند التفاعل */
+    }
+
+    .form-control:focus {
+        border-color: #2ac37d; /* تغيير اللون عند التفاعل */
+        box-shadow: 0 0 5px rgba(42, 195, 125, 0.5); /* تأثير الظل عند التفاعل */
+    }
+
+    .ps-section__header h3 {
+        font-size: 32px; /* تكبير حجم العنوان */
+        font-weight: bold;
+    }
+
+    .contact-form {
+        margin-left: 0; /* محاذاة الفورم إلى اليسار */
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+    }
+
+    .btn-dark {
+        background-color: #2ac37d; /* اللون الداكن للأزرار */
+        border: none;
+        border-radius: 20px; /* حواف مستديرة */
+        padding: 12px;
+    }
+
+    .btn-dark:hover {
+        background-color: #1a9f61; /* تأثير عند المرور على الزر */
+    }
+</style>

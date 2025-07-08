@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Tenders;
 use Illuminate\support\Facades\Http;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +16,7 @@ use App\Models\contacts;
 use App\Models\Services;
 use App\Models\Tourisms;
 use App\Models\Institutions;
+use App\Models\Tenders;
 
 class DashboardController extends Controller
 {
@@ -46,7 +46,12 @@ class DashboardController extends Controller
         'tourismCount' => $tourismCount,
         'projectCount' => $projectCount,
         'institutionCount' => $institutionCount,
-        'tendersCount'=>$tendersCount
+        'tendersCount'=>$tendersCount,
+        'services' => $services,
+        'projects' => $projects,
+        'tourisms' => $tourisms,
+
+        'institutions' => $institutions
     ]);
     }
 

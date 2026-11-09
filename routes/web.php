@@ -26,9 +26,9 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('dashboard');
 
 
 
@@ -58,7 +58,6 @@ Route::group([
         // CRUD: Create, Read, Update and Delete
         Route::get('/', [TourismsController::class,'index'])
             ->name('index');
-        Route::delete('/destroy/{id}',[TourismsController::class,'delete'])->name('delete');
 
         Route::get('/create', [TourismsController::class, 'create'])
             ->name('create');
@@ -146,13 +145,8 @@ Route::group([
 
 
 require __DIR__.'/auth.php';
-Route::get('/storage/{path}', function (string $path) {
-    $disk = \Illuminate\Support\Facades\Storage::disk('public');
-
-    abort_unless($disk->exists($path), 404);
-
-    return $disk->response($path);
-})->where('path', '.*');
+Route::get('/storage/{path}', [\App\Http\Controllers\StorageController::class, 'show'])
+    ->where('path', '.*');
 
 Route::get('/', [AppController::class,'index'])->name('app');
 Route::get('/{lang}', [AppController::class,'index']);

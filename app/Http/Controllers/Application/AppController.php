@@ -39,7 +39,7 @@ class AppController extends Controller
     //     $tourisms = Tourisms::all();
     //     $projects = Projects::all();
     //     $institutions=institutions::all();
-    //     return view('App.Home', [
+    //     return view('app.Home', [
     //         'services' => $services,
     //         'projects' => $projects,
     //         'tourisms' => $tourisms,
@@ -63,7 +63,7 @@ class AppController extends Controller
     $institutions = Institutions::all();
     $tenders = Tenders::where('status', 1)->latest()->take(4)->get();
 
-    return view('App.Home', [
+    return view('app.Home', [
         'services' => $services,
         'projects' => $projects,
         'tourisms' => $tourisms,
@@ -106,7 +106,7 @@ class AppController extends Controller
             session::put('locale', 'ar');
         }
 
-        return view('App.Home');
+        return view('app.Home');
     }
 
 
@@ -130,7 +130,7 @@ class AppController extends Controller
     {
         $this->validate($request, ['name' => 'required', 'email' => 'required|email', 'phone' => 'required', 'subject' => 'required', 'text' => 'required']);
         contacts::create($request->all());
-        Mail::send('App.email', array(
+        Mail::send('app.email', array(
             'Name' => $request->get('name'),
             'Email' => $request->get('email'),
             'phone' => $request->get('phone'),

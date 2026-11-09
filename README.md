@@ -61,7 +61,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 ## Render staging demo
 
-The `staging` branch includes a Render Blueprint in `render.yaml`. Create a Blueprint from this repository and deploy that branch; it provisions a free web service and PostgreSQL database. The container runs pending migrations on startup and adds the bundled sample content only when the content tables are empty. This does not import the local SQL dump. To create an initial admin during seeding, set `INITIAL_ADMIN_EMAIL` and `INITIAL_ADMIN_PASSWORD` in Render; the password must be at least 16 characters. Without those variables, no default admin credentials are created.
+The `staging` branch includes a Render Blueprint in `render.yaml`. Create a Blueprint from this repository and deploy that branch; it provisions a free web service and PostgreSQL database. The container runs pending migrations and adds bundled sample content on startup without duplicating existing sample records. This does not import the local SQL dump. To create an initial admin during seeding, set `INITIAL_ADMIN_EMAIL` and `INITIAL_ADMIN_PASSWORD` in Render; the password must be at least 16 characters. Without those variables, no default admin credentials are created.
 
 This configuration is for a temporary demo, not production:
 

@@ -44,12 +44,24 @@
                                 $tourismName = app()->getLocale() === 'ar' ? $tourism->name_ar : $tourism->name;
                                 $tourismDescription = app()->getLocale() === 'ar' ? $tourism->description_ar : $tourism->description;
                                 $tourismLocation = app()->getLocale() === 'ar' ? $tourism->location_ar : $tourism->location;
-                                $imagePath = $tourism->images->first()?->file_name;
+                                $imagePath = $tourism->images
+                                    ->first(fn ($image) => \Illuminate\Support\Facades\Storage::disk('public')->exists($image->file_name))
+                                    ?->file_name;
+                                $imageAssetPath = $tourism->image && is_file(public_path($tourism->image))
+                                    ? $tourism->image
+                                    : null;
+                                $imageStoredPath = $tourism->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($tourism->image)
+                                    ? $tourism->image
+                                    : null;
                             @endphp
                             <tr data-search="{{ \Illuminate\Support\Str::lower($tourism->name.' '.$tourism->name_ar.' '.$tourism->location.' '.$tourism->location_ar.' '.$tourism->description.' '.$tourism->description_ar) }}" x-show="!query || $el.dataset.search.includes(query.trim().toLowerCase())" class="transition hover:bg-slate-50">
                                 <td class="whitespace-nowrap px-6 py-4">
                                     <div class="flex items-center gap-3">
-                                        @if ($imagePath && \Illuminate\Support\Facades\Storage::disk('public')->exists($imagePath))
+                                        @if ($imageAssetPath)
+                                            <img src="{{ asset($imageAssetPath) }}" alt="" class="h-10 w-12 rounded-lg object-cover">
+                                        @elseif ($imageStoredPath)
+                                            <img src="{{ asset('storage/'.$imageStoredPath) }}" alt="" class="h-10 w-12 rounded-lg object-cover">
+                                        @elseif ($imagePath)
                                             <img src="{{ asset('storage/'.$imagePath) }}" alt="" class="h-10 w-12 rounded-lg object-cover">
                                         @else
                                             <div class="h-10 w-12 rounded-lg bg-teal-50" aria-hidden="true"></div>

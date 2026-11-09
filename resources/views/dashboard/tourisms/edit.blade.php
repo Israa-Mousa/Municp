@@ -96,8 +96,22 @@
                             <div class="form-group mb-3">
                                 <label for="image">Thumbnail</label>
                                 <br>
-                                @php $currentImage = $tourisms->images->first()?->file_name; @endphp
-                                @if ($currentImage && \Illuminate\Support\Facades\Storage::disk('public')->exists($currentImage))
+                                @php
+                                    $currentImage = $tourisms->images
+                                        ->first(fn ($image) => \Illuminate\Support\Facades\Storage::disk('public')->exists($image->file_name))
+                                        ?->file_name;
+                                    $currentImageAsset = $tourisms->image && is_file(public_path($tourisms->image))
+                                        ? $tourisms->image
+                                        : null;
+                                    $currentImageStored = $tourisms->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($tourisms->image)
+                                        ? $tourisms->image
+                                        : null;
+                                @endphp
+                                @if ($currentImageAsset)
+                                    <img id="thumbnails" src="{{ asset($currentImageAsset) }}" alt="{{ $tourisms->name }}" height="60">
+                                @elseif ($currentImageStored)
+                                    <img id="thumbnails" src="{{ asset('storage/'.$currentImageStored) }}" alt="{{ $tourisms->name }}" height="60">
+                                @elseif ($currentImage)
                                     <img id="thumbnails" src="{{ asset('storage/'.$currentImage) }}" alt="{{ $tourisms->name }}" height="60">
                                 @else
                                     <img id="thumbnails" src="{{ asset('assets/App/images/access/top_view.jpg') }}" alt="{{ __('Tourism image preview') }}" height="60">

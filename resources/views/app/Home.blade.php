@@ -131,17 +131,23 @@
                 <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     @forelse ($tourisms as $tourism)
                         @php
-                            $tourismImagePath = $tourism->images
-                                ->first(fn ($image) => \Illuminate\Support\Facades\Storage::disk('public')->exists($image->file_name))
-                                ?->file_name;
+                            $publicDisk = \Illuminate\Support\Facades\Storage::disk('public');
                             $tourismAssetPath = $tourism->image && is_file(public_path($tourism->image))
                                 ? $tourism->image
                                 : null;
-                            $tourismImage = $tourismImagePath
-                                ? asset('storage/'.$tourismImagePath)
-                                : ($tourismAssetPath
-                                    ? asset($tourismAssetPath)
-                                    : asset('assets/App/images/access/top_view.jpg'));
+                            $tourismStoredImagePath = $tourism->image && $publicDisk->exists($tourism->image)
+                                ? $tourism->image
+                                : null;
+                            $tourismRelatedImagePath = $tourism->images
+                                ->first(fn ($image) => \Illuminate\Support\Facades\Storage::disk('public')->exists($image->file_name))
+                                ?->file_name;
+                            $tourismImage = $tourismAssetPath
+                                ? asset($tourismAssetPath)
+                                : ($tourismStoredImagePath
+                                    ? asset('storage/'.$tourismStoredImagePath)
+                                    : ($tourismRelatedImagePath
+                                        ? asset('storage/'.$tourismRelatedImagePath)
+                                        : asset('assets/App/images/access/top_view.jpg')));
                         @endphp
                         <article data-portal-search="{{ \Illuminate\Support\Str::lower($tourism->name.' '.$tourism->name_ar.' '.$tourism->location.' '.$tourism->location_ar.' '.$tourism->description.' '.$tourism->description_ar) }}" x-show="!portalSearch || $el.dataset.portalSearch.includes(portalSearch)" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
                             <div class="relative h-52 overflow-hidden bg-slate-200">

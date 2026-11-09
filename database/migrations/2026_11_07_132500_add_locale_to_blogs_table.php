@@ -10,7 +10,7 @@ return new class extends Migration
     {
         if (! Schema::hasColumn('blogs', 'locale')) {
             Schema::table('blogs', function (Blueprint $table) {
-                $table->string('locale', 5)->default('ar')->after('name_ar');
+                $table->string('locale', 5)->default('ar');
             });
         }
     }

@@ -6,6 +6,7 @@ use App\Models\Blog;
 use Illuminate\Support\Facades\View;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Session;
 use App\Models\Projects;
@@ -37,6 +38,10 @@ class AppServiceProvider extends ServiceProvider
         //
         // App::setlocale('ar');
         //App::setlocale(request('lang','en')); since we need to store it on session we need to make meiddel ware
+    if (app()->environment('production')) {
+        URL::forceScheme('https');
+    }
+
     App::setLocale(Session::get('locale', config('app.locale')));
 
      View::composer('*', function ($view) {

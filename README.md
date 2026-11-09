@@ -59,6 +59,18 @@ In order to ensure that the Laravel community is welcoming to all, please review
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
+## Render staging demo
+
+The `staging` branch includes a Render Blueprint in `render.yaml`. Create a Blueprint from this repository and deploy that branch; it provisions a free web service and PostgreSQL database. The container runs pending migrations on startup. It does not import the local SQL dump or run database seeders.
+
+This configuration is for a temporary demo, not production:
+
+- Free web services can sleep when idle, and uploaded files are lost on restarts, sleep, or deploys.
+- Render's free PostgreSQL database is limited to 1 GB and expires after 30 days. After the grace period, Render deletes its data.
+- Email is configured to log rather than send because Render's free web services cannot send SMTP traffic on common mail ports.
+
+Do not store important or personal data in this staging environment.
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

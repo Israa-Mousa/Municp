@@ -4,8 +4,9 @@
 /public/storage
 /storage/*.key
 /vendor
-# .env
+.env
 .env.backup
+/ramallah_munc.sql
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml

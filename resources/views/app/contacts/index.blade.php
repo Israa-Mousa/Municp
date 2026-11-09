@@ -53,3 +53,44 @@
         </div>
     </main>
 </x-app-layout>
+
+<style>
+    .contact-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        border-radius: 20px; /* حواف مستديرة */
+        padding: 12px 20px; /* رفع المسافة داخل الحقل */
+        border: 2px solid #ccc; /* حواف خفيفة */
+        transition: border-color 0.3s ease; /* تأثير الانتقال عند التفاعل */
+    }
+
+    .form-control:focus {
+        border-color: #2ac37d; /* تغيير اللون عند التفاعل */
+        box-shadow: 0 0 5px rgba(42, 195, 125, 0.5); /* تأثير الظل عند التفاعل */
+    }
+
+    .ps-section__header h3 {
+        font-size: 32px; /* تكبير حجم العنوان */
+        font-weight: bold;
+    }
+
+    .contact-form {
+        margin-left: 0; /* محاذاة الفورم إلى اليسار */
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+    }
+
+    .btn-dark {
+        background-color: #2ac37d; /* اللون الداكن للأزرار */
+        border: none;
+        border-radius: 20px; /* حواف مستديرة */
+        padding: 12px;
+    }
+
+    .btn-dark:hover {
+        background-color: #1a9f61; /* تأثير عند المرور على الزر */
+    }
+</style>

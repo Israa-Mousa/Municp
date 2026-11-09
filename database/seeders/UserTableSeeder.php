@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -17,15 +16,25 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        //  
-        User::firstOrCreate(
-            ['email' => 'israa@mult.com'],
-            ['name' => 'Israa Municipal Admin', 'password' => Hash::make('12345')]
-        );
+        $email = env('INITIAL_ADMIN_EMAIL');
+        $password = env('INITIAL_ADMIN_PASSWORD');
+
+        if ($email === null && $password === null) {
+            return;
+        }
+
+        if (
+            ! is_string($email)
+            || filter_var($email, FILTER_VALIDATE_EMAIL) === false
+            || ! is_string($password)
+            || strlen($password) < 16
+        ) {
+            throw new \InvalidArgumentException('Set INITIAL_ADMIN_EMAIL and an INITIAL_ADMIN_PASSWORD of at least 16 characters.');
+        }
 
         User::firstOrCreate(
-            ['email' => 'israa@mult2.com'],
-            ['name' => 'Israa Content Editor', 'password' => Hash::make('12345')]
+            ['email' => $email],
+            ['name' => 'Municipal Admin', 'password' => Hash::make($password)]
         );
     }
 }

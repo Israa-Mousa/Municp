@@ -113,7 +113,7 @@
                             <div class="form-group mb-3">
                                 <label for="image">Thumbnail</label>
                                 <br>
-                                <img id="thumbnails" src="/test.png" alt="   " height="50">
+                                <img id="thumbnails" src="{{ asset('image/services.jpg') }}" alt="{{ __('Project thumbnail preview') }}" height="50">
                                 <input type="file" style="display:none" id="image" name="image"
                                     class="form-control">
                             </div>

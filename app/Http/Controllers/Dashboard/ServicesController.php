@@ -16,7 +16,7 @@ class ServicesController extends Controller
     //
     public function index(){
 
-         $services=Services::all();
+         $services=Services::query()->latest('id')->paginate(10)->withQueryString();
         return view('dashboard.Services.index',['services'=>$services]);
     }
     public function create(){
@@ -92,16 +92,14 @@ class ServicesController extends Controller
     }
     public function rules($id = 0)
     {
-        return [[
+        return [
             "description" => "nullable|string|min:8",
             "description_ar" => "nullable|string|min:8",
             "name" => "required|string|max:20",
             "name_ar" => "required|string|max:20",
-            "icon" => "nullable|image",
+            "icon" => "nullable|image|max:5120",
             "parentID" => "nullable|int|exists:services",
-            ]
-
-    ];
+        ];
     }
 
     protected function upload(UploadedFile $file)

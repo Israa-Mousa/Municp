@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 class Tourisms extends Model
 {
@@ -17,6 +18,11 @@ class Tourisms extends Model
         "image","locale"
 
     ];
+    public function images(): HasMany
+    {
+        return $this->hasMany(Images::class, 'tourisms_id');
+    }
+
     public static function GetImageLibrary($id)
     {
         $Library = DB::table('images')->where('tourisms_id', $id)->get();

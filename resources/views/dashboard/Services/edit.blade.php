@@ -41,7 +41,7 @@
                             <div class="form-group mb-3">
 
                                 <label for="name_ar">{{__('name_ar')}}</label>
-                                <input type="text" id="name_ar" name="name_ar" value="{{old('name_ar',$service->name)}}" class="form-control @error('name_ar') is-invalid @enderror"> @if($errors->has('name_ar'))
+                                <input type="text" id="name_ar" name="name_ar" value="{{old('name_ar',$service->name_ar)}}" class="form-control @error('name_ar') is-invalid @enderror"> @if($errors->has('name_ar'))
                                 <p class="text-danger">{{trans($errors->first('name_ar'))}}</p>
                                 @endif
                             </div>
@@ -91,11 +91,11 @@
                         <div class="col-md-4">
                             <div class="form-group mb-3">
                                 <label for="image">Thumbnail</label>
-                                <br> @if($service->icon)
-                                <img id="thumbnails" src="{{Storage::url($service->icon)}}" height="60"> @else
-                                <td><img id="thumbnails" src="{{asset('image/services.jpg')}}" height="60" /></td>
+                                <br> @if($service->icon && \Illuminate\Support\Facades\Storage::disk('public')->exists($service->icon))
+                                <img id="thumbnails" src="{{asset('storage/'.$service->icon)}}" alt="{{ $service->name }}" height="60"> @else
+                                <img id="thumbnails" src="{{asset('image/services.jpg')}}" alt="{{ $service->name }}" height="60">
                                 @endif
-                                <input type="file" style="display:none" id="image" name="icon" class="form-control">
+                                <input type="file" style="display:none" id="image" name="icon" class="form-control" accept="image/*">
                             </div>
                         </div>
                         <div class="col-md-12">

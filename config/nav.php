@@ -41,6 +41,12 @@
         'route.active' => 'dashboard.careers.*',
         'route' => '/dashboard/careers',
     ],
+    'tenders' => [
+        'title' => 'Tenders',
+        'icon' => 'fas fa-file-contract nav-icon',
+        'route.active' => 'dashboard.tenders.*',
+        'route' => '/dashboard/tenders',
+    ],
     'institutions' => [
         'title' => 'institutions',
         'icon' => 'fas fa-building nav-icon',

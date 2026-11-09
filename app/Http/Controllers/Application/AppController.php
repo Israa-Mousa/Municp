@@ -13,6 +13,7 @@ use App\Models\contacts;
 use App\Models\Services;
 use App\Models\Tourisms;
 use App\Models\Institutions;
+use App\Models\Tenders;
 
 use Mail;
 
@@ -22,10 +23,7 @@ class AppController extends Controller
 
     // public function index($lang = null)
     // {
-    //     // var_dump($lang);
-    //     // var_dump(session::get('locale'));
     //     if (Session::get('locale') == null) {
-    //         // dd('sad');
     //         Session::put('locale', 'en');
     //     }
     //     if ($lang != '') {
@@ -57,24 +55,27 @@ class AppController extends Controller
         app()->setLocale($lang); // مهم لتفعيل اللغة في نفس الطلب
     }
 
-    $blogs = Blog::all();
+    $blogs = Blog::where('status', 'active')->latest()->take(6)->get();
     $lang = Session::get('locale');
     $services = Services::mainServices();
-    $tourisms = Tourisms::all();
+    $tourisms = Tourisms::with('images')->get();
     $projects = Projects::all();
     $institutions = Institutions::all();
+    $tenders = Tenders::where('status', 1)->latest()->take(4)->get();
 
     return view('App.Home', [
         'services' => $services,
         'projects' => $projects,
         'tourisms' => $tourisms,
-        'institutions' => $institutions
+        'institutions' => $institutions,
+        'blogs' => $blogs,
+        'tenders' => $tenders,
     ]);
 }
 
     public function blogs($id)
     {
-        $blog = Blog::findOrFail($id);
+        $blog = Blog::where('status', 'active')->findOrFail($id);
         return view('app.pagess.news', [
             'blog' => $blog
         ]);
@@ -91,9 +92,7 @@ class AppController extends Controller
 
     public function careers($id)
     {
-//  var_dump($id);
-        $career = Careers::findOrFail(1);
-        // dd($career);
+        $career = Careers::findOrFail($id);
         return view('app.pagess.careers', [
             'career' => $career
         ]);
@@ -101,7 +100,6 @@ class AppController extends Controller
 
     public function indexsec($lang)
     {
-        var_dump($lang);
         if ($lang == "1") {
             session::put('locale', 'en');
         } else {
@@ -115,8 +113,6 @@ class AppController extends Controller
 
     public function contact( Request $request,$name = null)
     {
-        // var_dump($name);
-        // var_dump($request->name);
         $name = $request->name;
         return view('app.contacts.index', [
             'name' => $name
@@ -133,7 +129,6 @@ class AppController extends Controller
     public  function contactsave(Request $request)
     {
         $this->validate($request, ['name' => 'required', 'email' => 'required|email', 'phone' => 'required', 'subject' => 'required', 'text' => 'required']);
-        var_dump($request->all());
         contacts::create($request->all());
         Mail::send('App.email', array(
             'Name' => $request->get('name'),

@@ -3,21 +3,24 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\support\Facades\Http;
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Route;
+use App\Models\Blog;
+use App\Models\Careers;
+use App\Models\Projects;
+use App\Models\Services;
+use App\Models\Tenders;
 class DashboardController extends Controller
 {
     //
     public function index(){
-        $cities = json_decode(file_get_contents(storage_path() . "\cities.json"), true);
-
-        // echo "<pre>";
-        print_r(__($cities['Cities'][0]['name']));
-
-        // dd();
-        return view('dashboard.index');
+        return view('dashboard.index', [
+            'metrics' => [
+                ['label' => __('Citizen services'), 'count' => Services::count(), 'icon' => 'S', 'route' => 'dashboard.services.index'],
+                ['label' => __('Projects'), 'count' => Projects::count(), 'icon' => 'P', 'route' => 'dashboard.projects.index'],
+                ['label' => __('Tenders'), 'count' => Tenders::count(), 'icon' => 'T', 'route' => 'dashboard.tenders.index'],
+                ['label' => __('News and updates'), 'count' => Blog::count(), 'icon' => 'N', 'route' => 'dashboard.blogs.index'],
+                ['label' => __('Career opportunities'), 'count' => Careers::count(), 'icon' => 'C', 'route' => 'dashboard.careers.index'],
+            ],
+        ]);
     }
 
     public function userpage(){

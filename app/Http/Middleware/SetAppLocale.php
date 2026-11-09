@@ -3,12 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
+
 class SetAppLocale
 {
     /**
@@ -20,34 +18,24 @@ class SetAppLocale
      */
     public function handle(Request $request, Closure $next)
     {
+        $supportedLanguages = ['ar', 'en'];
+        $normaliseLanguage = static function ($language) use ($supportedLanguages): ?string {
+            if (! is_string($language) || ! preg_match('/^(ar|en)(?:-[a-z0-9]{2,8})?$/i', trim($language))) {
+                return null;
+            }
 
+            return strtolower(substr(trim($language), 0, 2));
+        };
 
-      //  App::setlocale($request->input('lang','en')); based on request without session
+        $default = $normaliseLanguage(config('app.locale')) ?? 'ar';
+        $preferredLanguage = $request->getPreferredLanguage($supportedLanguages) ?? $default;
+        $sessionLanguage = $normaliseLanguage(Session::get('locale'));
+        $requestedLanguage = $normaliseLanguage($request->input('lang'));
+        $language = $requestedLanguage ?? $sessionLanguage ?? $preferredLanguage;
 
-    //   $lang=$request->input('lang',Session::get('locale','en'));
-    //        App::setLocale($lang);
-    //        Session::put('locale',$lang); //based on  session
+        App::setLocale($language);
+        Session::put('locale', $language);
 
-    $default = 'en';
-
-    // Get language from the Accept-Language header
-    $language = $request->header('Accept-Language');
-
-    if ($language) {
-        $languages = explode(',', $language);
-        $default = $languages[0] ?? 'en'; // Safely get the first language
-
-        if (strlen($default) === 5) {
-            $default = substr($default, 0, 2); // Extract only the language code (e.g., "en" from "en-US")
-        }
+        return $next($request);
     }
-
-    // Get language from request input or session, defaulting to the detected language
-    $lang = $request->input('lang', Session::get('locale', $default));
-
-    App::setLocale($lang);
-    Session::put('locale', $lang); // Store in session
-
-    return $next($request);
-}
 }

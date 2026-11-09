@@ -106,7 +106,7 @@
                                 <div class="form-group mb-3">
                                     <label for="image">Thumbnail</label>
                                     <br>
-                                    <img id="thumbnails" src="/test.png" alt="   " height="50">
+                                    <img id="thumbnails" src="{{ asset('assets/App/images/access/top_view.jpg') }}" alt="{{ __('Tourism image preview') }}" height="50">
                                     <input type="file" style="display:none" id="image" name="image[]"
                                         class="form-control" multiple>
                                 </div>

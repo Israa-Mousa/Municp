@@ -94,7 +94,7 @@
                                 <li class="menu-item"><a href="#">Homepage #3</a></li>
                             </ul>
                         </li>
-                        <li class="menu-item menu-item-has-children has-mega-menu"><a href="#">Muncipility</a>
+                        <li class="menu-item menu-item-has-children has-mega-menu"><a href="#">{{ __('Ramallah Municipality') }}</a>
                             <div class="mega-menu">
                                 <div class="mega-wrap">
                                     <div class="mega-column">
@@ -228,7 +228,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                             <aside class="ps-widget--footer ps-widget--info">
-                                <header><a class="ps-logo" href="index.html"><img src="{{asset('/image/logo2.png') }}" alt=""></a>
+                                <header><a class="ps-logo" href="{{ route('app') }}"><img src="{{ asset('image/logo2.png') }}" alt="{{ __('Ramallah Municipality') }}" class="h-12 w-auto object-contain"></a>
                                     <h3 class="ps-widget__title">{{__('ADDRESS OFFICE')}}</h3>
                                 </header>
                                 <footer>

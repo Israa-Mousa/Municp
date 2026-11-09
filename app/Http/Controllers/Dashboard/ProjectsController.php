@@ -19,7 +19,7 @@ class ProjectsController extends Controller
     public function index()
     {
 
-        $projects = Projects::all();
+        $projects = Projects::query()->latest('id')->paginate(10)->withQueryString();
         $cities = json_decode(file_get_contents(storage_path() . "\cities.json"), true);
         //   print_r(__($cities['Cities'][0]['name']));
         return view('dashboard.projects.index', [
@@ -76,7 +76,6 @@ class ProjectsController extends Controller
     }
     public function update(Request $request, $id)
     {
-       dd($request->all());
         $project = Projects::findOrFail($id);
         $old_image = $project->image;
         $rules = $this->rules();
@@ -110,7 +109,7 @@ class ProjectsController extends Controller
                 'name_ar' => 'required|string|min:5',
                 "introduction_ar" => "required|string|min:8",
                 "description_ar" => "required|string|min:12",
-                "status" => "required|in:draft,inProgress,complete,delay",
+                "status" => "required|in:A,draft,inprogress,complete,delay",
                 "image" => "nullable|image",
                 'city' => 'required',
             ];

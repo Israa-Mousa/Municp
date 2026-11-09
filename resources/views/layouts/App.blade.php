@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang={{ app()->getLocale() }} dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+<html class="municipal-public" lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="utf-8">
@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link href="apple-touch-icon.png" rel="apple-touch-icon">
-    <link href="{{ asset('image/logblog.png') }}" rel="icon">
+    <link href="{{ asset('image/logo2.png') }}" rel="apple-touch-icon">
+    <link href="{{ asset('image/logo2.png') }}" rel="icon">
         <meta name="author" content="Nghia Minh Luong">
     <meta name="keywords" content="Default Description">
     <meta name="description" content="Default keyword">
@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="{{ asset('assets/App/plugins/revolution/css/navigation.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/App/css/style.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 
@@ -52,9 +53,7 @@
 
 
 {{-- <body class="ps-loading"> --}}
-<body class="ps-loading {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
-
-    <div class="header--sidebar"></div>
+<body class="municipal-public-body {{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }} flex min-h-screen flex-col" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 @include('layouts.header')
 
@@ -62,11 +61,13 @@
 
 
 
-    <main class="ps-main">
+    <main class="ps-main flex flex-1 flex-col">
 
         {{-- <x-flash-message /> --}}
 
-        {{ $slot }}
+        <div class="flex-1">
+            {{ $slot }}
+        </div>
 
         @include('layouts.sub')
         @include('layouts.footer')

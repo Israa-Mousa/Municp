@@ -4,23 +4,19 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\UploadedFile;
-use Illuminate\support\Facades\Http;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 use App\Models\Blog;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\support\Facades\Session;
 
 class BlogsController extends Controller
 {
     //
     public function index()
     {
-        $request=Request::create('api/blogs', 'Get');
-        $data=Route::dispatch($request);
-        $data=json_decode($data->getContent(), true);
+        $data = Blog::query()->latest()->paginate(10)->withQueryString();
         return view('dashboard.blogs.index', ['data'=>$data]);
     }
     public function delete($id=10)
@@ -44,12 +40,10 @@ class BlogsController extends Controller
    public function store(Request $request){
 
     $rules=$this->rules();
-    $locale=Session::get('locale');
-    $created_userID =Auth::user()->id;
     $request->validate($rules);
     $request->merge([
-      //  'locale'=>$locale,
-        'created_userID'=>$created_userID
+        'locale' => app()->getLocale(),
+        'created_userID' => Auth::id(),
     ]);
     $data=$request->except('image','blogs_banner');
     if($request->hasFile('image')){
@@ -62,11 +56,7 @@ class BlogsController extends Controller
             $request->file("blogs_banner")
         );
     }
-    var_dump($data);
-
-    $blog=Blog::create($data);
-    var_dump($blog);
-    dd();
+    Blog::create($data);
     return redirect()->route('dashboard.blogs.index')
     ->with('success',"addding successful");
    }
@@ -74,7 +64,6 @@ class BlogsController extends Controller
    public function edit($id)
    {
        $blog=Blog::findOrFail($id);
-    //    dd($blog->id);
        $status=Blog::getStatusOption();
        return view('dashboard.blogs.edit',[
            'blog'=>$blog,
@@ -84,16 +73,14 @@ class BlogsController extends Controller
 
    public function update(Request $request,$id){
     $rules=$this->rules($id);
-    $locale=Session::get('locale');
-    $created_userID =Auth::user()->id;
     $blog=Blog::findOrFail($id);
     $old_image=$blog->image;
     $old_blogs_banner=$blog->blogs_banner;
 
     $request->validate($rules);
     $request->merge([
-        'locale'=>$locale,
-        'created_userID'=>$created_userID
+        'locale' => app()->getLocale(),
+        'created_userID' => Auth::id(),
     ]);
 
     $data=$request->except('image','blogs_banner');
@@ -107,14 +94,13 @@ class BlogsController extends Controller
            $blogs_banner= $request->file("blogs_banner")
         );
     }
-    // var_dump($data);
     $blog->update($data);
     if($old_image && $old_image != $blog->image){
         Storage::disk('public')->delete($old_image);
        }
 
-       if($blogs_banner && $blogs_banner != $blog->blogs_banner){
-        Storage::disk('public')->delete($blogs_banner);
+       if($old_blogs_banner && $old_blogs_banner != $blog->blogs_banner){
+        Storage::disk('public')->delete($old_blogs_banner);
        }
     return redirect()->route('dashboard.blogs.index')
     ->with('success',"addding successful");
@@ -156,7 +142,7 @@ class BlogsController extends Controller
         // ]);
         // $data=Route::dispatch($request);
         // $data=json_decode($data->getContent(),true);
-        // var_dump($data);
+
         $request->name="sdmsa,dn";
         $response = Http::post('http://127.0.0.1:8000/api/blogs/', [
             'name' => $request->name,
@@ -167,13 +153,6 @@ class BlogsController extends Controller
         // $response = Http::acceptJson()->Post('http://127.0.0.1:8000/api/blogs/',$request->name);
         // $data=Route::dispatch($response);
         // $data=json_decode($data->getContent(),true);
-        // var_dump($data);
-
-        // die();
-
-
-
-
         return redirect()->back()->with('success', 'ypu are success add.');
     }
 

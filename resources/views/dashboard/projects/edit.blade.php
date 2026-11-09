@@ -33,8 +33,6 @@
                         <div class="row" style="padding: 20px">
                             <div class="col-md-8">
                                 <div class="form-group mb-3">
-
-
                                     <label for="name">{{ __('name') }}</label>
                                     <input type="text" id="name" name="name"
                                         value="{{ old('name', $project->name) }}"
@@ -46,6 +44,16 @@
                                     @if ($errors->has('name'))
                                         <p class="text-danger">{{ trans($errors->first('name')) }}</p>
                                     @endif
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="name_ar">{{ __('name_ar') }}</label>
+                                    <input type="text" id="name_ar" name="name_ar"
+                                        value="{{ old('name_ar', $project->name_ar) }}"
+                                        class="form-control @error('name_ar') is-invalid @enderror">
+                                    @error('name_ar')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div class="class form-group">
@@ -91,13 +99,27 @@
                                 @if ($errors->has('introduction'))
                                     <p class="text-danger">{{ $errors->first('introduction') }}</p>
                                 @endif
+                                <div class="form-group mb-3">
+                                    <label for="introduction_ar">{{ __('Introduction (Arabic)') }}</label>
+                                    <textarea id="introduction_ar" name="introduction_ar" class="form-control @error('introduction_ar') is-invalid @enderror">{{ old('introduction_ar', $project->introduction_ar) }}</textarea>
+                                </div>
+                                @error('introduction_ar')
+                                    <p class="text-danger">{{ $message }}</p>
+                                @enderror
 
                                 <div class="form-group mb-3">
-                                    <label for="description">Description</label>>
+                                    <label for="description">Description</label>
                                     <textarea id="description" name="description" class="form-control @error('description') is-invalid @enderror">{{ old('description', $project->description) }}</textarea>
                                 </div>
                                 @error('description')
                                     <p class="text-danger">{{ $errors->first('description') }}</p>
+                                @enderror
+                                <div class="form-group mb-3">
+                                    <label for="description_ar">{{ __('Description (Arabic)') }}</label>
+                                    <textarea id="description_ar" name="description_ar" class="form-control @error('description_ar') is-invalid @enderror">{{ old('description_ar', $project->description_ar) }}</textarea>
+                                </div>
+                                @error('description_ar')
+                                    <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
 
@@ -106,16 +128,15 @@
                                 <div class="form-group mb-3">
                                     <label for="image">Thumbnail</label>
                                     <br>
-                                    @if ($project->image)
-                                        <img id="thumbnails" src="{{ Storage::url($project->image) }}" height="60">
+                                    @if ($project->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($project->image))
+                                        <img id="thumbnails" src="{{ asset('storage/'.$project->image) }}" alt="{{ $project->name }}" height="60">
 
                                         {{-- <img id="thumbnails" src="{{Storage::disk('public')->url($project->image)}}" height="60"> --}}
                                     @else
-                                        <td><img id="thumbnails" src="{{ asset('image/services.jpg') }}" height="60" />
-                                        </td>
+                                        <img id="thumbnails" src="{{ asset('image/services.jpg') }}" alt="{{ __('Project thumbnail preview') }}" height="60">
                                     @endif
                                     <input type="file" style="display:none"id="image" name="image"
-                                        class="form-control">
+                                        class="form-control" accept="image/*">
                                 </div>
                             </div>
                             <div class="col-md-12">

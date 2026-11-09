@@ -4,7 +4,7 @@
     <div class="ps-section ps-section--hotdeal-3 pt-80 pb-40">
         <div class="ps-container">
             <div class="ps-section__header mb-50">
-                <h3 class="ps-section__title" data-mask="Ramllah Muncipilty">Ramllah Muncipilty Map</h3>
+                <h3 class="ps-section__title">{{ __('Ramallah Municipality') }} · {{ trans('app.Map') }}</h3>
             </div>
             <div class="ps-section__content">
                 <div class="row" style="display: flex;

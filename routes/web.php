@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\ProjectsController;
 use App\Http\Controllers\Dashboard\TourismsController;
 use App\Http\Controllers\Dashboard\BlogsController;
 use App\Http\Controllers\Dashboard\CareersController;
+use App\Http\Controllers\Dashboard\TendersController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -43,6 +44,15 @@ Route::group([
 
     Route::get('/user/', [DashboardController::class,'userpage']);
 
+    Route::prefix('/tenders')->as('tenders.')->group(function () {
+        Route::get('/', [TendersController::class, 'index'])->name('index');
+        Route::get('/create', [TendersController::class, 'create'])->name('create');
+        Route::post('/', [TendersController::class, 'store'])->name('store');
+        Route::get('/{tender}', [TendersController::class, 'show'])->name('show');
+        Route::get('/{tender}/edit', [TendersController::class, 'edit'])->name('edit');
+        Route::put('/{tender}', [TendersController::class, 'update'])->name('update');
+        Route::delete('/{tender}', [TendersController::class, 'destroy'])->name('destroy');
+    });
 
     Route::prefix('/tourisms')->as('tourisms.')->group(function () {
         // CRUD: Create, Read, Update and Delete
@@ -103,7 +113,7 @@ Route::group([
             ->name('edit');
         Route::Post('/update/{id}', [BlogsController::class, 'update'])
             ->name('update');
-        Route::get('/delete/{id}', [BlogsController::class, 'delete'])
+        Route::delete('/delete/{id}', [BlogsController::class, 'delete'])
             ->name('delete');
     });
     Route::prefix('/careers')->as('careers.')->group(function () {
@@ -118,7 +128,7 @@ Route::group([
             ->name('edit');
         Route::Post('/update/{id}', [CareersController::class, 'update'])
             ->name('update');
-        Route::get('/delete/{id}', [CareersController::class, 'delete'])
+        Route::delete('/delete/{id}', [CareersController::class, 'delete'])
             ->name('delete');
     });
     Route::prefix('/contacts')->as('contacts.')->group(function () {
@@ -136,6 +146,14 @@ Route::group([
 
 
 require __DIR__.'/auth.php';
+Route::get('/storage/{path}', function (string $path) {
+    $disk = \Illuminate\Support\Facades\Storage::disk('public');
+
+    abort_unless($disk->exists($path), 404);
+
+    return $disk->response($path);
+})->where('path', '.*');
+
 Route::get('/', [AppController::class,'index'])->name('app');
 Route::get('/{lang}', [AppController::class,'index']);
 
@@ -149,4 +167,3 @@ Route::get('/app/map/',[AppController::class,'map'])->name('map');
 Route::get('/app/blogs/{id?}',[AppController::class,'blogs'])->name('app.blogs');
 Route::get('/app/projects/{id}',[AppController::class,'projects'])->name('app.projects');
 Route::get('/app/careers/{id}',[AppController::class,'careers'])->name('app.careers');
-

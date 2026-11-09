@@ -155,7 +155,7 @@
 
   <!-- رأس الصفحة -->
   <header>
-    <img src="{{ asset('assets/logo.png') }}" alt="شعار البلدية" height="50">
+    <img src="{{ asset('image/logo2.png') }}" alt="{{ __('Ramallah Municipality') }}" class="h-12 w-auto object-contain">
     <nav>
       <ul>
         <li><a href="#">الصفحة الرئيسية</a></li>

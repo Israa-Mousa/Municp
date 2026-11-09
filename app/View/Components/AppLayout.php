@@ -25,7 +25,7 @@ class AppLayout extends Component
     }
     public function render()
     {
-        $blogs = Blog::all();
+        $blogs = Blog::where('status', 'active')->latest()->take(6)->get();
         $services = Services::mainServices();
         $projects = Projects::all();
         $tourisms = Tourisms::all();

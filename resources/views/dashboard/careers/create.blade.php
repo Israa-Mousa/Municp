@@ -1,141 +1,25 @@
 @extends('layouts.dashboard')
 
-@section('title', __('tourisms'))
-@section('breadcrumb')
-    @parent
-    <li class="breadcrumb-item active">{{ __('tourisms') }}</li>
-@endsection
+@section('title', __('Create career opportunity'))
 
-<!-- Main content -->
 @section('content')
-    <section class="content">
-        <div class="container-fluid">
-            <!-- Info boxes -->
-            @include('dashboard.subview')
-            <!-- /.row -->
-            <div class="card">
-                <div class="card-header border-transparent">
-                    <h3 class="card-title">{{ trans('create tourisms') }}</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body p-0">
-                    <form action="{{ route('dashboard.tourisms.store') }}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row" style="padding: 20px">
-                            <div class="col-md-8">
-                                <div class="form-group mb-3">
-
-                                    <label for="name">{{ __('name') }}</label>
-                                    <input type="text" id="name" name="name"
-                                        value="{{ old('name', $tourisms->name) }}"
-                                        class="form-control @error('name') is-invalid @enderror">
-
-                                    @if ($errors->has('name'))
-                                        <p class="text-danger">{{ trans($errors->first('name')) }}</p>
-                                    @endif
-                                </div>
-
-                                <div class="form-group mb-3">
-
-                                    <label for="name_ar">{{ __('name_ar') }}</label>
-                                    <input type="text" id="name_ar" name="name_ar"
-                                        value="{{ old('name_ar', $tourisms->name) }}"
-                                        class="form-control @error('name_ar') is-invalid @enderror">
-
-                                    @if ($errors->has('name_ar'))
-                                        <p class="text-danger">{{ trans($errors->first('name_ar')) }}</p>
-                                    @endif
-                                </div>
-
-
-                                <div class="class form-group">
-
-                                    <div class="form-group mb-3">
-                                        <label for="location">location</label>
-                                        <textarea id="location" name="location" class="form-control @error('location') is-invalid @enderror"></textarea>
-                                    </div>
-                                    @error('location')
-                                        <p class="text-danger">{{ $errors->first('location') }}</p>
-                                    @enderror
-
-                                </div>
-                                <div class="class form-group">
-
-                                    <div class="form-group mb-3">
-                                        <label for="location_ar">location_ar</label>
-                                        <textarea id="location_ar" name="location_ar" class="form-control @error('location_ar') is-invalid @enderror"></textarea>
-                                    </div>
-                                    @error('location_ar')
-                                        <p class="text-danger">{{ $errors->first('location_ar') }}</p>
-                                    @enderror
-                                </div>
-
-
-                                <div class="class form-group">
-
-                                    <div class="form-group mb-3">
-                                        <label for="description">Description</label>
-                                        <textarea id="description" name="description" class="form-control @error('description') is-invalid @enderror"></textarea>
-                                    </div>
-                                    @error('description')
-                                        <p class="text-danger">{{ $errors->first('description') }}</p>
-                                    @enderror
-
-                                </div>
-                                <div class="class form-group">
-
-                                    <div class="form-group mb-3">
-                                        <label for="description_ar">Description_ar</label>
-                                        <textarea id="description_ar" name="description_ar" class="form-control @error('description_ar') is-invalid @enderror"></textarea>
-                                    </div>
-                                    @error('description_ar')
-                                        <p class="text-danger">{{ $errors->first('description_ar') }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group mb-3">
-                                    <label for="image">Thumbnail</label>
-                                    <br>
-                                    <img id="thumbnails" src="/test.png" alt="   " height="50">
-                                    <input type="file" style="display:none" id="image" name="image[]"
-                                        class="form-control" multiple>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group mb-3">
-                                    <button type="submit" class="btn btn-primary" style="background: #214761">Save</button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </form>
-
-                </div>
-    </section>
+    <div class="mx-auto max-w-4xl">
+        <div class="mb-6"><a href="{{ route('dashboard.careers.index') }}" class="text-sm font-semibold text-teal-800 hover:text-teal-950">← {{ __('Back to opportunities') }}</a><h2 class="mt-3 text-2xl font-bold tracking-tight text-slate-900">{{ __('Create career opportunity') }}</h2><p class="mt-2 text-sm text-slate-600">{{ __('Add the role requirements in English and Arabic.') }}</p></div>
+        <form action="{{ route('dashboard.careers.store') }}" method="POST" class="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            @csrf
+            <div class="grid gap-5 sm:grid-cols-2">
+                <div><label for="job_title" class="mb-1.5 block text-sm font-semibold text-slate-700">{{ __('Job title (English)') }}</label><input id="job_title" name="job_title" required value="{{ old('job_title') }}" class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-100">@error('job_title')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror</div>
+                <div><label for="job_title_ar" class="mb-1.5 block text-sm font-semibold text-slate-700">{{ __('Job title (Arabic)') }}</label><input id="job_title_ar" name="job_title_ar" dir="rtl" required value="{{ old('job_title_ar') }}" class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-100">@error('job_title_ar')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror</div>
+                <div><label for="emai_careers" class="mb-1.5 block text-sm font-semibold text-slate-700">{{ __('Application email') }}</label><input id="emai_careers" name="emai_careers" type="email" required value="{{ old('emai_careers') }}" class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-100">@error('emai_careers')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror</div>
+                <div><label for="status" class="mb-1.5 block text-sm font-semibold text-slate-700">{{ __('Status') }}</label><select id="status" name="status" required class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-100"><option value="1" @selected(old('status', 1) == 1)>{{ __('Open') }}</option><option value="0" @selected(old('status') === '0')>{{ __('Closed') }}</option></select>@error('status')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror</div>
+            </div>
+            <div class="grid gap-5 sm:grid-cols-2">
+                <div><label for="job_skills" class="mb-1.5 block text-sm font-semibold text-slate-700">{{ __('Required skills (English)') }}</label><textarea id="job_skills" name="job_skills" rows="4" required class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-100">{{ old('job_skills') }}</textarea>@error('job_skills')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror</div>
+                <div><label for="job_skills_ar" class="mb-1.5 block text-sm font-semibold text-slate-700">{{ __('Required skills (Arabic)') }}</label><textarea id="job_skills_ar" name="job_skills_ar" dir="rtl" rows="4" required class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-100">{{ old('job_skills_ar') }}</textarea>@error('job_skills_ar')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror</div>
+                <div><label for="job_description" class="mb-1.5 block text-sm font-semibold text-slate-700">{{ __('Job description (English)') }}</label><textarea id="job_description" name="job_description" rows="6" required class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-100">{{ old('job_description') }}</textarea>@error('job_description')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror</div>
+                <div><label for="job_description_ar" class="mb-1.5 block text-sm font-semibold text-slate-700">{{ __('Job description (Arabic)') }}</label><textarea id="job_description_ar" name="job_description_ar" dir="rtl" rows="6" required class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-100">{{ old('job_description_ar') }}</textarea>@error('job_description_ar')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror</div>
+            </div>
+            <div class="flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end"><a href="{{ route('dashboard.careers.index') }}" class="inline-flex items-center justify-center rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50">{{ __('Cancel') }}</a><button type="submit" class="inline-flex items-center justify-center rounded-lg bg-teal-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">{{ __('Create opportunity') }}</button></div>
+        </form>
+    </div>
 @endsection
-
-@push('scripts')
-    <script>
-        //click on image triger of image chosen
-        document.getElementById('thumbnails').addEventListener('click', function(e) {
-            document.getElementById('image').click();
-        });
-        //js image preview
-        document.getElementById('image').addEventListener('change', function(e) {
-            if (this.files && this.files[0]) {
-                document.getElementById('thumbnails').src = URL.createObjectURL(this.files[0])
-            }
-        });
-    </script>
-@endpush

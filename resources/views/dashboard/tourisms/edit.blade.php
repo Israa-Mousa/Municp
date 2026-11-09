@@ -95,14 +95,14 @@
                         <div class="col-md-4">
                             <div class="form-group mb-3">
                                 <label for="image">Thumbnail</label>
-                                <br> @if(!$tourisms->image)
-                                <img id="thumbnails" src="/test.png" alt="   " height="50">
-                                <input type="file" style="display:none" id="image" name="image[]" class="form-control" multiple>
-
+                                <br>
+                                @php $currentImage = $tourisms->images->first()?->file_name; @endphp
+                                @if ($currentImage && \Illuminate\Support\Facades\Storage::disk('public')->exists($currentImage))
+                                    <img id="thumbnails" src="{{ asset('storage/'.$currentImage) }}" alt="{{ $tourisms->name }}" height="60">
                                 @else
-                                <img id="thumbnails" src="{{ asset('sortage/'.$tourisms->image) }}" alt="   " height="50">
-                                <input type="file" style="display:none" id="image" name="image[]" class="form-control" multiple>
-                                 @endif
+                                    <img id="thumbnails" src="{{ asset('assets/App/images/access/top_view.jpg') }}" alt="{{ __('Tourism image preview') }}" height="60">
+                                @endif
+                                <input type="file" style="display:none" id="image" name="image[]" class="form-control" multiple accept="image/*">
                             </div>
                         </div>
 

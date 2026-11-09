@@ -97,8 +97,8 @@
                                 <div class="form-group mb-3">
                                     <label for="image">Thumbnail</label>
                                     <br>
-                                    <img id="thumbnails" src="/test.png" alt="   " height="50">
-                                    <input type="file"  style="display:none" id="image" name="icon" class="form-control">
+                                    <img id="thumbnails" src="{{ asset('image/services.jpg') }}" alt="{{ __('Service thumbnail preview') }}" height="50">
+                                    <input type="file"  style="display:none" id="image" name="icon" class="form-control" accept="image/*">
                                 </div>
                             </div>
 
@@ -131,4 +131,3 @@ document.getElementById('image').addEventListener('change',function(e){
 } );
   </script>
 @endpush
-

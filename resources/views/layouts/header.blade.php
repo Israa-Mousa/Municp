@@ -1,130 +1,50 @@
+<header
+    x-data="{ menuOpen: false }"
+    class="municipal-header sticky top-0 z-50 border-b border-slate-800 bg-slate-900/95 text-white shadow-lg shadow-slate-900/10 backdrop-blur-md"
+    dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}"
+>
+    <nav aria-label="{{ __('Main navigation') }}" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex min-h-[4.75rem] items-center justify-between gap-2 sm:gap-4">
+            <a href="{{ route('app') }}" class="municipal-brand flex min-w-0 shrink-0 items-center gap-2 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 sm:gap-3" aria-label="{{ __('Ramallah Municipality home') }}">
+                <img src="{{ asset('image/logo2.png') }}" alt="{{ __('Ramallah Municipality') }}" class="municipal-brand__logo h-10 w-auto max-w-[7rem] object-contain sm:h-12 sm:max-w-[8.25rem]">
+                <span class="municipal-brand-copy min-w-0">
+                    <span class="block truncate text-sm font-bold tracking-tight text-white sm:text-base">{{ __('Ramallah Municipality') }}</span>
+                    <span class="mt-0.5 hidden text-[11px] font-medium text-slate-300 sm:block">{{ __('Official municipal portal') }}</span>
+                </span>
+            </a>
 
-<header class="header" style="" >
-    <div class="header__top">
-            {{-- <div class="container-fluid"> --}}
-                <div class="container-fluid {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+            <div class="municipal-desktop-links min-w-0 flex-1 items-center justify-center gap-1">
+                <a href="{{ route('app') }}" class="whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-semibold text-slate-200 transition duration-200 hover:bg-white/10 hover:text-white 2xl:px-3">{{ __('app.Home') }}</a>
+                <a href="{{ route('app') }}" class="whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-semibold text-slate-200 transition duration-200 hover:bg-white/10 hover:text-white 2xl:px-3">{{ __('Municipality') }}</a>
+                <a href="{{ route('app') }}#services" class="whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-semibold text-slate-200 transition duration-200 hover:bg-white/10 hover:text-white 2xl:px-3">{{ __('Services') }}</a>
+                <a href="{{ route('map') }}" class="whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-semibold text-slate-200 transition duration-200 hover:bg-white/10 hover:text-white 2xl:px-3">{{ __('City map') }}</a>
+                <a href="{{ route('app') }}#news" class="whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-semibold text-slate-200 transition duration-200 hover:bg-white/10 hover:text-white 2xl:px-3">{{ __('Latest news') }}</a>
+                <a href="{{ route('app.contact') }}" class="whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-semibold text-slate-200 transition duration-200 hover:bg-white/10 hover:text-white 2xl:px-3">{{ __('Contact us') }}</a>
+            </div>
 
-                <div class="row">
-                    <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12 ">
-                        <p>{{ __('app.location') }}</p>
-                    </div>
-                    <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
-                        <div class="header__actions">
-                            @auth
-                            {{-- <a href="{{ route('profile') }}">{{ Auth::user()->name }}</a> --}}
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit()">{{ __('app.Logout') }}</a>
-                            <form id="logout" action="{{ route('logout') }}" method="post" style="display: none;">
-                                @csrf
-                            </form>
-                            @else
-                            <a href="{{ route('login') }}">{{ __('Login & Register') }}</a>
-
-                            @endauth
-
-                            <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ __('language') }}<i class="fa fa-angle-down"></i></a>
-                                <ul class="dropdown-menu">
-                                    {{-- <li><a href="/1">{{ __('english') }}</a></li>
-                                    <li><a href="/2">{{ __('arabic') }}</a></li> --}}
-                                    <li><a href="{{ url('/en') }}">{{ __('english') }}</a></li>
-<li><a href="{{ url('/ar') }}">{{ __('arabic') }}</a></li>
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="municipal-header__actions flex shrink-0 items-center gap-1.5 sm:gap-2">
+                <a
+                    href="{{ url(app()->getLocale() === 'ar' ? '/en' : '/ar') }}"
+                    lang="{{ app()->getLocale() === 'ar' ? 'en' : 'ar' }}"
+                    aria-label="{{ app()->getLocale() === 'ar' ? 'Switch language to English' : 'Switch language to Arabic' }}"
+                    class="grid h-9 min-w-9 place-items-center rounded-lg px-2 text-xs font-bold tracking-wider text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
+                >{{ app()->getLocale() === 'ar' ? 'EN' : 'AR' }}</a>
+                <a href="{{ route('login') }}" class="municipal-login-link inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-lg px-3 py-2 text-sm font-semibold text-slate-200 transition-all duration-200 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300">{{ __('Log in') }}</a>
+                <button type="button" class="municipal-mobile-toggle grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-white/20 text-slate-100 transition hover:border-white/30 hover:bg-white/10 xl:hidden" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen.toString()" aria-controls="mobile-primary-navigation" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="text-xl" x-text="menuOpen ? '×' : '☰'" aria-hidden="true"></span>
+                </button>
             </div>
         </div>
-        <nav class="navigation">
-            <div class="container-fluid">
-                <div class="navigation__column  {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }} left">
-                    <div class="header__logo"><a class="ps-logo" style="padding-top:8px!important" href="index.html"><img src="{{asset('image/header2.jpg')}}" alt=""></a></div>
-                </div>
-                <div class="navigation__column  {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }} center">
-                    <ul class="main-menu menu {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
-                        <li class="menu-item menu-item-has-children dropdown"><a href="/">{{ trans('app.Home') }}</a>
 
-                        </li>
-                        <li class="menu-item menu-item-has-children has-mega-menu"><a href="#">{{ trans('app.Municipality') }}</a>
-                            <div class="mega-menu">
-                                <div class="mega-wrap">
-                                    <div class="mega-column">
-                                        <ul class="mega-item mega-features">
-
-                                        </ul>
-                                    </div>
-                                    <div class="mega-column">
-                                        <h4 class="mega-heading">{{ trans('app.TOURISM AND ANTIQUITIES') }}</h4>
-                                        <ul class="mega-item">
-                                            @foreach ($tourisms as $tourism)
-                                            <li><a href="product-listing.html"
-                                                >@if(Session::get('locale')=="ar"){{ $tourism->name_ar }}@else{{ $tourism->name}}@endif</a></li>
-
-
-
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                    <div class="mega-column">
-                                        <h4 class="mega-heading">{{ __('app.PROJECTS AND ACHIEVEMENTS') }}</h4>
-                                        <ul class="mega-item">
-                                            @foreach ($projects as $project)
-                                            <li><a href="{{ route('app.projects',$project->id) }}">
-                            @if(Session::get('locale')=="ar"){{ $project->name_ar }}@else{{ $project->name}}@endif</a></li>
-
-
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                    <div class="mega-column">
-                                        <h4 class="mega-heading">{{ __('app.CITIZEN SERVICES') }}</h4>
-                                        <ul class="mega-item">
-                                            @foreach ($services as $service)
-                                            @if(Session::get('locale')=="ar")
-                                            <li><a href="product-listing.html">{{ $service->name_ar }}</a></li>
-                                            @else
-                                            <li><a href="product-listing.html">{{ $service->name }}</a></li>
-                                           @endif
-                                            @endforeach
-                                        </ul>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-                        <li class="menu-item"><a href="/app/map">{{ trans('app.Map') }}</a></li>
-                        <li class="menu-item menu-item-has-children dropdown"><a href="#">{{ __('app.News') }}</a>
-                            <ul class="sub-menu">
-                                <li class="menu-item menu-item-has-children dropdown"><a href="blog-grid.html"> {{ __('app.Latest Blogs') }} </a>
-                                    <ul class="sub-menu">
-                                        @foreach ($blogs as $blog)
-                                        <li class="menu-item">
-                                            <a href="{{ route('app.blogs') }}">
-                                                @if(Session::get('locale')=="ar"){{ $blog->name_ar }}@else{{ $blog->name}}@endif</a></li>
-
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="menu-item"><a href="/app/contact">{{ __('contact') }}</a>
-                        </li>
-
-
-                    </ul>
-                </div>
-                <div class="navigation__column  {{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }} right">
-                    <form class="ps-search--header" action="do_action" method="post">
-                        <input class="form-control" type="text" placeholder="{{ __('search') }}">
-                        <button><i class="ps-icon-search"></i></button>
-                    </form>
-
-                    <div class="menu-toggle"><span></span></div>
-                </div>
+        <div id="mobile-primary-navigation" x-cloak x-show="menuOpen" class="municipal-mobile-navigation border-t border-white/10 py-3 xl:hidden">
+            <div class="grid gap-1 sm:grid-cols-2">
+                <a @click="menuOpen = false" href="{{ route('app') }}" class="rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">{{ __('app.Home') }}</a>
+                <a @click="menuOpen = false" href="{{ route('app') }}" class="rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">{{ __('Municipality') }}</a>
+                <a @click="menuOpen = false" href="{{ route('app') }}#services" class="rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">{{ __('Services') }}</a>
+                <a @click="menuOpen = false" href="{{ route('map') }}" class="rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">{{ __('City map') }}</a>
+                <a @click="menuOpen = false" href="{{ route('app') }}#news" class="rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">{{ __('Latest news') }}</a>
+                <a @click="menuOpen = false" href="{{ route('app.contact') }}" class="rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">{{ __('Contact us') }}</a>
             </div>
-        </nav>
-    </header>
-
-
-
+        </div>
+    </nav>
+</header>

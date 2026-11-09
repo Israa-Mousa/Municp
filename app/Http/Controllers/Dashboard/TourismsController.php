@@ -8,13 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\UploadedFile;
 use  Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\session;
-use Illuminate\Support\Facades\DB;
 use App\Models\Tourisms;
 use App\Models\Images;
 class TourismsController extends Controller
 {
     public function index(){
-         $tourisms=Tourisms::all();
+         $tourisms=Tourisms::with('images')->latest('id')->paginate(10)->withQueryString();
         return view('dashboard.tourisms.index',['tourisms'=>$tourisms]);
     }
     public function create(){
@@ -23,33 +22,22 @@ class TourismsController extends Controller
     }
     public function store(Request $request){
 
-        $rules = $this->rules();
-        //    dd($request->all());
-        $lang=Session::get('langID') ;
-        $request->validate($rules);
-        $request->merge([
-            "created_userID" => Auth::user()->id,
-            "news_letter_langid" => $lang,
-        ]);
-        $data =$request->except("image");
-        $tourisms = Tourisms::create($data);
-        // dd($tourisms);
-        if($tourisms && $request->hasFile("image")){
-            if ($request->hasFile("image")) {
-                $images = $request->file('image');
-                foreach($images as $image) {
-                    $name = $image->getClientOriginalName();
-                    $path=$this->upload($image);
-                    $image=Images::create([
-                        'file_name' => $path,
-                        // 'path' => 'uploads/thumbnails'.$path,
-                         'tourisms_id'=>$tourisms->id,
-                         'update_at'=>now()
-                      ]);
-                }
+            $validated = $request->validate($this->rules());
+            $lang=Session::get('langID') ;
+            $imageFiles = $validated['image'] ?? [];
+            unset($validated['image']);
+            $validated['created_userID'] = Auth::id();
+            $validated['news_letter_langid'] = $lang;
+            $tourism = Tourisms::create($validated);
+
+            foreach ($imageFiles as $imageFile) {
+                Images::create([
+                    'file_name' => $this->upload($imageFile),
+                    'tourisms_id' => $tourism->id,
+                ]);
             }
-            }
-        return redirect()
+
+            return redirect()
             ->route("dashboard.tourisms.index")
             ->with(
                 "success",
@@ -59,52 +47,36 @@ class TourismsController extends Controller
 
     public function edit($id){
         $lang=Session::get('langID') ;
-         $tourisms=Tourisms::findOrFail($id);
+         $tourisms=Tourisms::with('images')->findOrFail($id);
         return view('dashboard.tourisms.edit',['tourisms'=>$tourisms]);
     }
 
     public function update(Request $request, $id){
-        $tourisms=Tourisms::findOrFail($id);
-        // $banner= $tourisms->GetImageLibrary($id);
-        // dd($banner);
-        $banner=Images::where('tourisms_id',$id)->get();
-
-        $rules = $this->rules();
+        $tourism=Tourisms::findOrFail($id);
+        $validated = $request->validate($this->rules());
         $lang=Session::get('langID');
-        $request->validate($rules);
-        $request->merge([
-            "created_userID" => Auth::user()->id,
-            "news_letter_langid" => $lang,
-        ]);
-        $data =$request->except("image");
-        $tourisms->update($data);
-        if($tourisms && $request->hasFile("image")){
-            if ($request->hasFile("image")) {
-                $images = $request->file('image');
-                foreach($images as $image) {
-                    $name = $image->getClientOriginalName();
-                    $path=$this->upload($image);
-                    $image=Images::create([
-                        'file_name' => $path,
-                        // 'path' => 'uploads/thumbnails'.$path,
-                         'tourisms_id'=>$tourisms->id,
-                         'update_at'=>now()
-                      ]);
+        $imageFiles = $validated['image'] ?? [];
+        unset($validated['image']);
+        $validated['created_userID'] = Auth::id();
+        $validated['news_letter_langid'] = $lang;
+        $tourism->update($validated);
 
-                }
-            }
-            }
-            if($banner!=$image){
-                // dd($banner);
+        if ($imageFiles) {
+            $oldImages = Images::where('tourisms_id', $tourism->id)->get();
 
-                foreach($banner as $index){
-                    // dd($index->file_name);
-                    Storage::disk('public')->delete($index->file_name);
-                }
-  foreach($banner as $ba){
-            Images::find($ba->Banners_image_ID)->delete();
+            foreach ($imageFiles as $imageFile) {
+                Images::create([
+                    'file_name' => $this->upload($imageFile),
+                    'tourisms_id' => $tourism->id,
+                ]);
+            }
+
+            foreach ($oldImages as $oldImage) {
+                Storage::disk('public')->delete($oldImage->file_name);
+                $oldImage->delete();
+            }
         }
-            }
+
         return redirect()
             ->route("dashboard.tourisms.index")
             ->with(
@@ -122,17 +94,16 @@ class TourismsController extends Controller
     }
     public function rules($news_letter_id = 0)
     {
-        return [[
+        return [
             "description" => "nullable|string|min:8",
             "description_ar" => "nullable|string|min:8",
             "location" => "nullable|string|min:8",
             "location_ar" => "nullable|string|min:8",
             "name" => "required|string|max:20",
             "name_ar" => "required|string|max:20",
-            "image" => "nullable|image",
-            ]
-
-    ];
+            "image" => "nullable|array",
+            "image.*" => "image|max:5120",
+        ];
     }
 
     protected function upload(UploadedFile $file)

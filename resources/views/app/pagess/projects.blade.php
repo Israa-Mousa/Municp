@@ -13,7 +13,7 @@
 
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
                         <div class="card" style="">
-                            <img class="card-img-top" src="{{ asset('/storage/'.$project->image) }}" style="width:100%" alt="Card image cap">
+                            <img class="card-img-top" src="{{ $project->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($project->image) ? asset('storage/'.$project->image) : asset('assets/App/images/access/building_l.jpg') }}" style="width:100%" alt="{{ app()->getLocale() === 'ar' ? $project->name_ar : $project->name }}">
                             <div class="card-body" style="padding: 10px">
                               <p class="card-title" style="color: black">
                                 @if(Session::get('locale')=="ar"){{ $project->introduction_ar }}@else{{ $project->introduction}}@endif

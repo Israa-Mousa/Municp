@@ -1,6 +1,309 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+[x-cloak] {
+    display: none !important;
+}
+
+html.municipal-public {
+    font-size: 16px;
+}
+
+@layer components {
+    .municipal-admin .content {
+        padding: 1.25rem;
+    }
+
+    .municipal-admin .container-fluid {
+        margin-inline: auto;
+        width: 100%;
+    }
+
+    .municipal-admin .municipal-search-icon {
+        inset-inline-start: 0.75rem;
+    }
+
+    .municipal-admin .municipal-search-input {
+        padding-inline: 2.25rem 0.75rem;
+    }
+
+    .municipal-admin .sidebar-close {
+        margin-inline-start: auto;
+    }
+
+    .municipal-admin .card {
+        width: 100%;
+        max-width: none;
+        overflow: hidden;
+        border: 1px solid rgb(226 232 240);
+        border-radius: 1rem;
+        background: white;
+        box-shadow: 0 1px 3px rgb(15 23 42 / 8%);
+    }
+
+    .municipal-admin .card:hover {
+        transform: none;
+    }
+
+    .municipal-admin .card-header {
+        border-bottom: 1px solid rgb(226 232 240);
+        padding: 1.25rem 1.5rem;
+        font-weight: 600;
+    }
+
+    .municipal-admin .card-body {
+        padding: 1.5rem;
+    }
+
+    .municipal-admin .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .municipal-admin .col-md-8,
+    .municipal-admin .col-md-4,
+    .municipal-admin .col-md-12 {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .municipal-admin .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .municipal-admin .form-group > label,
+    .municipal-admin form label {
+        display: block;
+        margin-bottom: 0.4rem;
+        color: rgb(51 65 85);
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .municipal-admin .form-control {
+        display: block;
+        width: 100%;
+        border: 1px solid rgb(203 213 225);
+        border-radius: 0.5rem;
+        background-color: white;
+        padding: 0.625rem 0.75rem;
+        color: rgb(15 23 42);
+        font-size: 0.875rem;
+        line-height: 1.5rem;
+        transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    .municipal-admin .form-control:focus {
+        border-color: rgb(13 148 136);
+        outline: 2px solid transparent;
+        box-shadow: 0 0 0 3px rgb(20 184 166 / 16%);
+    }
+
+    .municipal-admin .form-control.is-invalid {
+        border-color: rgb(225 29 72);
+    }
+
+    .municipal-admin .text-danger {
+        margin-top: 0.4rem;
+        color: rgb(190 18 60);
+        font-size: 0.875rem;
+    }
+
+    .municipal-admin .btn.btn-primary {
+        border: 0;
+        border-radius: 0.5rem;
+        background: rgb(15 118 110) !important;
+        padding: 0.65rem 1.1rem;
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: background-color 150ms ease;
+    }
+
+    .municipal-admin .btn.btn-primary:hover {
+        background: rgb(17 94 89) !important;
+    }
+
+    @media (min-width: 768px) {
+        .municipal-admin .content {
+            padding: 1.5rem;
+        }
+
+        .municipal-admin .col-md-8 {
+            width: calc(66.666667% - 0.55rem);
+        }
+
+        .municipal-admin .col-md-4 {
+            width: calc(33.333333% - 0.55rem);
+        }
+
+        .municipal-admin .col-md-12 {
+            width: 100%;
+        }
+    }
+}
+
+.municipal-inline-start {
+    border-inline-start: 4px solid rgb(13 148 136);
+    padding-inline-start: 1rem;
+}
+
+.municipal-home .municipal-hero__overlay {
+    background: linear-gradient(90deg, rgb(2 6 23 / 80%) 0%, rgb(15 23 42 / 60%) 52%, rgb(2 44 34 / 70%) 100%);
+}
+
+.municipal-home .municipal-hero:dir(rtl) .municipal-hero__overlay {
+    background: linear-gradient(270deg, rgb(2 6 23 / 80%) 0%, rgb(15 23 42 / 60%) 52%, rgb(2 44 34 / 70%) 100%);
+}
+
+.municipal-home .municipal-hero > img {
+    opacity: 1;
+}
+
+.municipal-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+.municipal-public-body {
+    height: auto;
+    min-height: 100vh;
+    overflow-x: clip;
+}
+
+.municipal-header .municipal-brand {
+    max-width: 100%;
+}
+
+.municipal-header .municipal-brand__logo {
+    display: block;
+    flex: 0 0 auto;
+    object-fit: contain;
+}
+
+.municipal-footer {
+    background-color: rgb(2 44 34);
+    background-image: linear-gradient(135deg, rgb(2 44 34) 0%, rgb(6 78 59) 52%, rgb(4 47 46) 100%);
+}
+
+.municipal-header a:focus-visible,
+.municipal-header button:focus-visible,
+.municipal-footer a:focus-visible {
+    outline-offset: 3px;
+}
+
+.municipal-desktop-links {
+    display: none;
+}
+
+.municipal-brand-copy {
+    display: none;
+}
+
+.municipal-mobile-toggle {
+    display: grid;
+}
+
+.municipal-ticker__viewport {
+    overflow: hidden;
+}
+
+.municipal-ticker__track {
+    animation: municipal-ticker-scroll 48s linear infinite;
+}
+
+.municipal-ticker__viewport:hover .municipal-ticker__track,
+.municipal-ticker__viewport:focus-within .municipal-ticker__track {
+    animation-play-state: paused;
+}
+
+@keyframes municipal-ticker-scroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.municipal-ticker__viewport:dir(rtl) .municipal-ticker__track {
+    animation-name: municipal-ticker-scroll-rtl;
+}
+
+@keyframes municipal-ticker-scroll-rtl {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .municipal-ticker__viewport {
+        overflow-x: auto;
+        scrollbar-width: thin;
+    }
+
+    .municipal-ticker__track {
+        animation: none;
+    }
+}
+
+@media (max-width: 359px) {
+    .municipal-header .municipal-brand__logo {
+        max-height: 2rem;
+        max-width: 5.5rem;
+    }
+
+    .municipal-header .municipal-header__actions {
+        gap: 0.25rem;
+    }
+
+    .municipal-header .municipal-header__actions a {
+        padding-inline: 0.5rem;
+    }
+
+    .municipal-header .municipal-login-link {
+        font-size: 0.75rem;
+    }
+}
+
+@media (min-width: 640px) {
+    .municipal-header .municipal-brand-copy {
+        display: block !important;
+        max-width: none;
+    }
+
+    .municipal-header .municipal-brand-copy > span:last-child {
+        display: block !important;
+    }
+}
+
+@media (min-width: 1280px) {
+    .municipal-header .municipal-desktop-links {
+        display: flex !important;
+    }
+
+    .municipal-header .municipal-mobile-toggle,
+    .municipal-header .municipal-mobile-navigation {
+        display: none !important;
+    }
+}
+
+.municipal-footer a,
+.municipal-footer p,
+.municipal-footer li {
+    overflow-wrap: anywhere;
+}
+
   .card-container {
       display: flex;
       flex-wrap: wrap;
